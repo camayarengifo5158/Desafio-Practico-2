@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>
+        Contacto | Fragola Bakery
+    </title>
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <meta content="Cuéntanos tu idea, consulta por un postre o encuentra las sucursales de Fragola Bakery."
+        name="description" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <header class="cabecera">
+        <nav aria-label="Navegación principal" class="nav-container contenedor">
+            <a aria-label="Fragola, inicio" class="logo" href="index.html">
+                <img alt="Fragola bakery" src="img/logo-fragola.png" />
+            </a>
+            <ul class="nav-menu">
+                <li>
+                    <a href="index.html">
+                        Inicio
+                    </a>
+                </li>
+                <li>
+                    <a href="catalogo.html">
+                        Catálogo
+                    </a>
+                </li>
+                <li>
+                    <a href="sobreNosotros.html">
+                        Sobre nosotros
+                    </a>
+                </li>
+                <li>
+                    <a aria-current="page" class="activo" href="contacto.html">
+                        Contacto
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-sesion" data-nav-sesion></div>
+        </nav>
+    </header>
+    <main id="contenido">
+        <!-- Página de contacto. Las clases específicas se adaptarán al CSS compartido. -->
+        <section class="portada-contacto">
+            <div class="contenedor">
+                <p class="sobretitulo">
+                    HABLEMOS DE ALGO DULCE
+                </p>
+                <h1>
+                    Tu próximo momento especial empieza aquí.
+                </h1>
+                <p class="descripcion-contacto">
+                    ¿Tienes una celebración en mente o se te antoja algo dulce? Cuéntanos qué necesitas y encontremos
+                    juntos el postre para la ocasión.
+                </p>
+                <a class="cta-button" href="#formulario-contacto">
+                    Cuéntanos tu idea
+                </a>
+                <a class="boton-mapa" href="#sucursales">
+                    Encuentra una sucursal
+                </a>
+            </div>
+        </section>
+        <section class="seccion-contacto" id="formulario-contacto">
+            <div class="contenedor dos-columnas">
+                <div class="informacion-contacto">
+                    <p class="sobretitulo">
+                        ESTAMOS PARA AYUDARTE
+                    </p>
+                    <h2>
+                        Hagamos realidad tu idea.
+                    </h2>
+                    <p>
+                        Puedes consultarnos sobre pasteles, cajas de postres o mesas dulces para bodas, cumpleaños y
+                        eventos corporativos.
+                    </p>
+                    <ul class="lista-contacto">
+                        <li>
+                            <strong>
+                                Pedidos personalizados:
+                            </strong>
+                            cuéntanos la temática, los sabores que te gustan y la cantidad de personas.
+                        </li>
+                        <li>
+                            <strong>
+                                Eventos:
+                            </strong>
+                            incluye la fecha y el lugar de tu celebración para consultar por un montaje.
+                        </li>
+                        <li>
+                            <strong>
+                                Retiro de pedidos:
+                            </strong>
+                            encuentra las direcciones y horarios de nuestras sucursales más abajo.
+                        </li>
+                    </ul>
+                    <h3>
+                        También estamos en Instagram
+                    </h3>
+                    <p>
+                        Descubre más de Fragola y escríbenos por mensaje directo.
+                    </p>
+                    <!-- Usuario conservado del index original. Confirmar con el negocio antes de publicar. -->
+                    <a class="cta-button" href="https://www.instagram.com/fragola.postres" rel="noopener noreferrer"
+                        target="_blank">
+                        @fragola.postres
+                    </a>
+                    <!-- Agregar WhatsApp y correo cuando el negocio proporcione sus datos reales. -->
+                </div>
+                <div class="contenedor-formulario">
+                    <h2>
+                        Cuéntanos qué necesitas
+                    </h2>
+                    <p>
+                        Los campos marcados con * son obligatorios.
+                    </p>
+                    <!-- Maqueta académica: aún no hay un servicio que reciba los mensajes.
+                 El botón permanecerá deshabilitado hasta conectar el envío. -->
+                    <form class="formulario-contacto" method="post">
+                        <div class="campo-formulario">
+                            <label for="nombre">
+                                Nombre completo *
+                            </label>
+                            <input id="nombre" name="nombre" placeholder="Escribe tu nombre" required="" type="text" />
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="correo">
+                                Correo electrónico *
+                            </label>
+                            <input id="correo" name="correo" placeholder="nombre@ejemplo.com" required=""
+                                type="email" />
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="telefono">
+                                Teléfono (opcional)
+                            </label>
+                            <input id="telefono" name="telefono" placeholder="Tu número de contacto" type="tel" />
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="motivo">
+                                ¿En qué podemos ayudarte? *
+                            </label>
+                            <select id="motivo" name="motivo" required="">
+                                <option disabled="" selected="" value="">
+                                    Selecciona una opción
+                                </option>
+                                <option value="postres">
+                                    Consulta sobre postres
+                                </option>
+                                <option value="pastel">
+                                    Pastel personalizado
+                                </option>
+                                <option value="evento">
+                                    Mesa dulce para un evento
+                                </option>
+                                <option value="pedido">
+                                    Consulta sobre un pedido
+                                </option>
+                                <option value="otra">
+                                    Otra consulta
+                                </option>
+                            </select>
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="fecha">
+                                Fecha del evento o del pedido (opcional)
+                            </label>
+                            <input id="fecha" name="fecha" type="date" />
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="personas">
+                                Cantidad de personas (opcional)
+                            </label>
+                            <input id="personas" min="1" name="personas" placeholder="Por ejemplo: 20" step="1"
+                                type="number" />
+                        </div>
+                        <div class="campo-formulario">
+                            <label for="mensaje">
+                                Tu mensaje *
+                            </label>
+                            <textarea id="mensaje" name="mensaje"
+                                placeholder="Cuéntanos tu idea, los sabores, la temática o cualquier detalle importante."
+                                required="" rows="6"></textarea>
+                        </div>
+                        <p class="aviso-formulario" id="aviso-envio">
+                            El envío por formulario estará disponible próximamente. Por ahora, puedes escribirnos por
+                            Instagram.
+                        </p>
+                        <button class="boton-enviar" disabled="" type="submit">
+                            Enviar consulta
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <!-- Direcciones y horarios conservados del index; confirmar con el negocio antes de publicar. -->
+        <section class="sucursales" id="sucursales">
+            <div class="contenedor">
+                <div class="destacados-encabezado">
+                    <p class="sobretitulo">
+                        NOS VEMOS EN FRAGOLA
+                    </p>
+                    <h2>
+                        Nuestras Sucursales
+                    </h2>
+                    <p class="descripcion-seccion">
+                        Visítanos para retirar tus pedidos o disfrutar de un momento dulce
+                    </p>
+                </div>
+                <div class="fila-sucursales">
+                    <article class="tarjeta-sucursal">
+                        <h3>
+                            Fragola La Mascota
+                        </h3>
+                        <p class="sucursal-direccion">
+                            Calle La Mascota, Avenida El Almendro, Plaza La Mascota, Segundo nivel, Local D.
+                        </p>
+                        <div class="sucursal-horario">
+                            <p>
+                                <strong>
+                                    Lunes a Viernes:
+                                </strong>
+                                8:00 am - 5:30 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Sábados:
+                                </strong>
+                                7:00 am - 1:00 pm
+                            </p>
+                        </div>
+                        <a class="boton-mapa"
+                            href="https://www.google.com/maps/search/?api=1&amp;query=Fragola%20La%20Mascota%20El%20Salvador"
+                            rel="noopener noreferrer" target="_blank">
+                            Ver en Google Maps
+                        </a>
+                    </article>
+                    <article class="tarjeta-sucursal">
+                        <h3>
+                            Fragola Epic Plaza
+                        </h3>
+                        <p class="sucursal-direccion">
+                            Centro Comercial Epic Plaza, Sótano 1, Avenida Bellavista, Col. Santa Elena.
+                        </p>
+                        <div class="sucursal-horario">
+                            <p>
+                                <strong>
+                                    Lunes a Viernes:
+                                </strong>
+                                10:00 am - 6:00 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Sábados:
+                                </strong>
+                                9:00 am - 6:00 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Domingos:
+                                </strong>
+                                10:00 am - 4:00 pm
+                            </p>
+                        </div>
+                        <a class="boton-mapa"
+                            href="https://www.google.com/maps/search/?api=1&amp;query=Fragola%20Epic%20Plaza%20El%20Salvador"
+                            rel="noopener noreferrer" target="_blank">
+                            Ver en Google Maps
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="pie">
+        <div class="contenedor fila-pie">
+            <div class="columna-pie">
+                <a class="logo logo-pie" href="index.html">
+                    <img alt="Fragola bakery" src="img/logo-fragola.png" />
+                </a>
+                <p>
+                    Repostería artesanal creada con pasión para llenar de dulzura tus momentos más especiales
+                </p>
+            </div>
+            <div class="columna-pie">
+                <h4>
+                    Navegación
+                </h4>
+                <ul class="enlaces-pie">
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="catalogo.html">
+                            Catálogo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sobreNosotros.html">
+                            Sobre Nosotros
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contacto.html">
+                            Contacto
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="columna-pie contacto-pie">
+                <h4>
+                    Atención y Pedidos
+                </h4>
+                <ul class="lista-contacto-pie">
+                    <li>
+                        <a href="#formulario-contacto">
+                            Consulta por tu pedido
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/fragola.postres" rel="noopener noreferrer" target="_blank">
+                            @fragola.postres
+                        </a>
+                    </li>
+                    <li>
+                        <span>
+                            La Mascota &amp; Epic Plaza
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            Encargos con 48h de anticipación
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="pie-derechos">
+            <p>
+                2026 Fragola Postres - Proyecto de Desarrollo Web
+            </p>
+        </div>
+    </footer>
+    <script type="module" src="js/ui/pagina-general.js"></script>
+</body>
+
+</html>

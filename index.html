@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>
+        Fragola · Postres y momentos especiales
+    </title>
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <meta
+        content="Postres artesanales y mesas dulces para tus momentos especiales. Conoce los favoritos de Fragola y nuestras sucursales."
+        name="description" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <header class="cabecera">
+        <nav aria-label="Navegación principal" class="nav-container contenedor">
+            <a aria-label="Fragola, inicio" class="logo" href="index.html">
+                <img alt="Fragola bakery" src="img/logo-fragola.png" />
+            </a>
+            <ul class="nav-menu">
+                <li>
+                    <a class="activo" href="index.html">
+                        Inicio
+                    </a>
+                </li>
+                <li>
+                    <a href="catalogo.html">
+                        Catálogo
+                    </a>
+                </li>
+                <li>
+                    <a href="sobreNosotros.html">
+                        Sobre nosotros
+                    </a>
+                </li>
+                <li>
+                    <a href="contacto.html">
+                        Contacto
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-sesion" data-nav-sesion></div>
+        </nav>
+    </header>
+    <main id="contenido">
+        <section class="portada">
+            <div class="contenedor portada-interior">
+                <p class="sobretitulo">
+                    UN POQUITO DE DULZURA, TODOS LOS DÍAS
+                </p>
+                <div class="portada-centro">
+                    <h1 id="titulo-portada">
+                        Postres hechos
+                        <br />
+                        con
+                        <span class="titulo-cursiva">
+                            amor.
+                        </span>
+                    </h1>
+                    <div class="portada-ilustracion">
+                        <img alt="Ilustración de un pastel con velas y la frase Para celebrar lo bonito"
+                            src="img/ilustracion-pastel.png" />
+                    </div>
+                </div>
+                <div class="portada-inferior">
+                    <p>
+                        Endulzamos tus momentos especiales
+                        <br />
+                        con recetas únicas y mucho cariño.
+                    </p>
+                    <div class="portada-botones">
+                        <a class="boton-primario" href="#favoritos">
+                            Descubre nuestros postres
+                            <span>
+                                ↗
+                            </span>
+                        </a>
+                        <a class="enlace-simple" href="#eventos">
+                            Tengo algo que celebrar ↗
+                        </a>
+                    </div>
+                </div>
+                <a class="seguir" href="#favoritos">
+                    HECHO PARA COMPARTIR
+                    <span>
+                        ↓
+                    </span>
+                </a>
+            </div>
+        </section>
+        <section class="destacados" id="favoritos">
+            <div class="contenedor">
+                <div class="destacados-encabezado">
+                    <p class="sobretitulo">
+                        DE NUESTRO HORNO, PARA TI
+                    </p>
+                    <h2>
+                        Nuestros favoritos
+                    </h2>
+                    <p class="descripcion-seccion">
+                        Los postres más pedidos y amados por nuestros clientes
+                    </p>
+                </div>
+                <div class="fila-destacados">
+                    <article class="tarjeta">
+                        <div class="tarjeta-imagen">
+                            <span class="etiqueta-tarjeta">
+                                Popular
+                            </span>
+                            <img alt="Donas con glaseado y chispas de colores, fotografía de referencia" height="1000"
+                                src="img/donas.jpg" width="900" />
+                        </div>
+                        <div class="tarjeta-contenido">
+                            <span class="tarjeta-categoria">
+                                Especialidad
+                            </span>
+                            <h3>
+                                Donas decoradas
+                            </h3>
+                            <p>
+                                Caja de donas esponjosas con glaseado artesanal en tonos pastel y chispas de colores.
+                            </p>
+                            <div class="tarjeta-pie">
+                                <span class="precio">
+                                    $22.00
+                                </span>
+                                <a aria-label="Ver Donas decoradas" class="boton-tarjeta" href="catalogo.html">
+                                    Ver más
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="tarjeta">
+                        <div class="tarjeta-imagen">
+                            <span class="etiqueta-tarjeta">
+                                Favorito
+                            </span>
+                            <img alt="Pastel decorado, fotografía de referencia" height="1000" src="img/pastel.jpg"
+                                width="900" />
+                        </div>
+                        <div class="tarjeta-contenido">
+                            <span class="tarjeta-categoria">
+                                Pasteles
+                            </span>
+                            <h3>
+                                Pastel Vintage
+                            </h3>
+                            <p>
+                                Bizcocho suave relleno de crema pastelera decorado con detalles clásicos artesanales.
+                            </p>
+                            <div class="tarjeta-pie">
+                                <span class="precio">
+                                    $18.50
+                                </span>
+                                <a aria-label="Ver Pastel Vintage" class="boton-tarjeta" href="catalogo.html">
+                                    Ver más
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="tarjeta">
+                        <div class="tarjeta-imagen">
+                            <span class="etiqueta-tarjeta">
+                                Nuevo
+                            </span>
+                            <img alt="Macarons de distintos colores, fotografía de referencia" height="1000"
+                                src="img/macarons.jpg" width="900" />
+                        </div>
+                        <div class="tarjeta-contenido">
+                            <span class="tarjeta-categoria">
+                                Galletas
+                            </span>
+                            <h3>
+                                Macarons Florales
+                            </h3>
+                            <p>
+                                Delicados macarons franceses pintados a mano con rellenos florales y frutales.
+                            </p>
+                            <div class="tarjeta-pie">
+                                <span class="precio">
+                                    $10.40
+                                </span>
+                                <a aria-label="Ver Macarons Florales" class="boton-tarjeta" href="catalogo.html">
+                                    Ver más
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="destacados-boton-final">
+                    <a class="cta-button" href="catalogo.html">
+                        Explora todo el menú
+                    </a>
+                </div>
+                <p class="nota-fotos">
+                    Una muestra de lo que nos inspira. Fotografías de referencia.
+                </p>
+            </div>
+        </section>
+        <section class="eventos" id="eventos">
+            <div class="contenedor dos-columnas">
+                <div class="columna-imagen">
+                    <img alt="Pastel de celebración, fotografía de referencia" src="img/eventos.jpg" />
+                </div>
+                <div class="columna-texto">
+                    <p class="sobretitulo">
+                        LOS MEJORES MOMENTOS SE COMPARTEN
+                    </p>
+                    <h2>
+                        Un día especial merece algo dulce.
+                    </h2>
+                    <p class="descripcion-evento">
+                        Hacemos de tu evento un bonito recuerdo
+                    </p>
+                    <p class="descripcion-evento">
+                        Diseñamos barras y estaciones de postres personalizadas para bodas, cumpleaños y eventos
+                        corporativos
+                    </p>
+                    <ul class="lista-beneficios">
+                        <li>
+                            <span>
+                                Diseños personalizados según la temática de tu celebración
+                            </span>
+                        </li>
+                        <li>
+                            <span>
+                                Variedad de porciones individuales, shots gourmet y pasteles centrales
+                            </span>
+                        </li>
+                        <li>
+                            Montaje completo en el lugar del evento y asesoría de cantidades
+                        </li>
+                    </ul>
+                    <a class="boton-whatsapp" href="contacto.html">
+                        Cotizar montaje
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section class="sucursales" id="sucursales">
+            <div class="contenedor">
+                <div class="destacados-encabezado">
+                    <p class="sobretitulo">
+                        NOS VEMOS EN FRAGOLA
+                    </p>
+                    <h2>
+                        Nuestras Sucursales
+                    </h2>
+                    <p class="descripcion-seccion">
+                        Visítanos para retirar tus pedidos o disfrutar de un momento dulce
+                    </p>
+                </div>
+                <div class="fila-sucursales">
+                    <article class="tarjeta-sucursal">
+                        <h3>
+                            Fragola La Mascota
+                        </h3>
+                        <p class="sucursal-direccion">
+                            Calle La Mascota, Avenida El Almendro, Plaza La Mascota, Segundo nivel, Local D.
+                        </p>
+                        <div class="sucursal-horario">
+                            <p>
+                                <strong>
+                                    Lunes a Viernes:
+                                </strong>
+                                8:00 am - 5:30 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Sábados:
+                                </strong>
+                                7:00 am - 1:00 pm
+                            </p>
+                        </div>
+                        <a class="boton-mapa"
+                            href="https://www.google.com/maps/search/?api=1&amp;query=Fragola%20La%20Mascota%20El%20Salvador"
+                            rel="noopener noreferrer" target="_blank">
+                            Ver en Google Maps
+                        </a>
+                    </article>
+                    <article class="tarjeta-sucursal">
+                        <h3>
+                            Fragola Epic Plaza
+                        </h3>
+                        <p class="sucursal-direccion">
+                            Centro Comercial Epic Plaza, Sótano 1, Avenida Bellavista, Col. Santa Elena.
+                        </p>
+                        <div class="sucursal-horario">
+                            <p>
+                                <strong>
+                                    Lunes a Viernes:
+                                </strong>
+                                10:00 am - 6:00 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Sábados:
+                                </strong>
+                                9:00 am - 6:00 pm
+                            </p>
+                            <p>
+                                <strong>
+                                    Domingos:
+                                </strong>
+                                10:00 am - 4:00 pm
+                            </p>
+                        </div>
+                        <a class="boton-mapa"
+                            href="https://www.google.com/maps/search/?api=1&amp;query=Fragola%20Epic%20Plaza%20El%20Salvador"
+                            rel="noopener noreferrer" target="_blank">
+                            Ver en Google Maps
+                        </a>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="pie">
+        <div class="contenedor fila-pie">
+            <div class="columna-pie">
+                <a class="logo logo-pie" href="index.html">
+                    <img alt="Fragola bakery" src="img/logo-fragola.png" />
+                </a>
+                <p>
+                    Repostería artesanal creada con pasión para llenar de dulzura tus momentos más especiales
+                </p>
+            </div>
+            <div class="columna-pie">
+                <h4>
+                    Navegación
+                </h4>
+                <ul class="enlaces-pie">
+                    <li>
+                        <a href="index.html">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="catalogo.html">
+                            Catálogo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="sobreNosotros.html">
+                            Sobre Nosotros
+                        </a>
+                    </li>
+                    <li>
+                        <a href="contacto.html">
+                            Contacto
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="columna-pie contacto-pie">
+                <h4>
+                    Atención y Pedidos
+                </h4>
+                <ul class="lista-contacto-pie">
+                    <li>
+                        <a href="contacto.html">
+                            Consulta por tu pedido
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.instagram.com/fragola.postres" rel="noopener noreferrer" target="_blank">
+                            @fragola.postres
+                        </a>
+                    </li>
+                    <li>
+                        <span>
+                            La Mascota &amp; Epic Plaza
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            Encargos con 48h de anticipación
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="pie-derechos">
+            <p>
+                2026 Fragola Postres - Proyecto de Desarrollo Web
+            </p>
+        </div>
+    </footer>
+    <script type="module" src="js/ui/pagina-general.js"></script>
+</body>
+
+</html>

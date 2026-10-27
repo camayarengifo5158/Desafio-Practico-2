@@ -1,0 +1,1173 @@
+/* ==========================================================
+   
+   INDICE
+
+   0. Base: variables, reset y etiquetas generales      - 19
+   1. Utilidades de layout (contenedor, sobretitulo)    - 98
+   2. Cabecera y navegacion                             - 116
+   3. Botones                                           - 183
+   4. Pie de pagina                                     - 233
+   5. index.html                                        - 287
+   6. catalogo.html                                     - 570
+   7. contacto.html                                     - 739
+   8. sobreNosotros.html                                - 879
+   9. breakpoints                                       - 958
+
+   ========================================================== */
+
+
+/* ==========================================================
+   0. BASE
+   ========================================================== */
+
+:root {
+    --fucsia: #d91661;
+    --rosa: #e99aaf;
+    --rosa-claro: #fff1f5;
+    --dorado: #bf9b38;
+    --blanco: #ffffff;
+    --texto: #503d43;
+    --borde-claro: rgba(191, 155, 56, 0.45);
+    --borde-suave: rgba(233, 154, 175, 0.5);
+    --serif: 'DM Serif Display', Georgia, serif;
+    --mono: 'IBM Plex Mono', monospace;
+    --fuente-menu: 'Raleway', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--blanco);
+    color: var(--fucsia);
+    font-family: Georgia, serif;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+a {
+    color: var(--fucsia);
+    text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+    text-decoration: underline;
+}
+
+img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+h1, h2, h3, h4, p {
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.1;
+}
+
+h1 {
+    font-size: 4rem;
+    letter-spacing: -2px;
+}
+
+h2 {
+    font-size: 2.5rem;
+    letter-spacing: -1px;
+}
+
+h3 {
+    margin-top: 10px;
+    font-size: 28px;
+}
+
+h4 {
+    margin-top: 12px;
+    font-size: 22px;
+}
+
+
+/* ==========================================================
+   1. UTILIDADES DE LAYOUT
+   ========================================================== */
+
+.contenedor {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sobretitulo {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.6;
+}
+
+
+/* ==========================================================
+   2. CABECERA Y NAVEGACION (compartido)
+   ========================================================== */
+
+.cabecera {
+    background-color: var(--blanco);
+}
+
+.nav-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--borde-claro);
+}
+
+.logo {
+    display: inline-block;
+    width: 140px;
+}
+
+.logo img {
+    width: 100%;
+    height: auto;
+}
+
+.nav-menu {
+    display: flex;
+    flex: 1 1 300px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 23px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.nav-menu a,
+.enlaces-pie a {
+    font-family: var(--fuente-menu);
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.nav-menu a {
+    display: inline-block;
+    padding: 8px 0;
+}
+
+.nav-menu .activo {
+    text-decoration: underline;
+}
+
+.boton-navegacion {
+    font-size: 14px;
+}
+
+.cabecera a,
+.portada a,
+.pie a {
+    color: var(--fucsia);
+}
+
+
+/* ==========================================================
+   3. BOTONES (compartido)
+   ========================================================== */
+
+.cta-button,
+.boton-primario,
+.boton-whatsapp,
+.boton-mapa,
+.boton-tarjeta {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    padding: 14px 26px;
+    border: 1px solid var(--fucsia);
+    border-radius: 999px;
+    font-family: var(--serif);
+    line-height: 1.3;
+    text-align: center;
+    transition: top 0.3s;
+}
+
+.cta-button:hover,
+.cta-button:focus-visible,
+.boton-primario:hover,
+.boton-primario:focus-visible,
+.boton-whatsapp:hover,
+.boton-whatsapp:focus-visible,
+.boton-mapa:hover,
+.boton-mapa:focus-visible,
+.boton-tarjeta:hover,
+.boton-tarjeta:focus-visible {
+    top: -3px;
+}
+
+.cabecera .cta-button,
+.portada .boton-primario {
+    border-color: var(--fucsia);
+}
+
+.boton-tarjeta {
+    padding: 9px 20px;
+    font-size: 14px;
+}
+
+.boton-mapa {
+    margin-top: auto;
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   4. PIE DE PAGINA (compartido)
+   ========================================================== */
+
+.pie {
+    padding-top: 48px;
+    background-color: var(--blanco);
+    color: var(--texto);
+    border-top: 1px solid var(--dorado);
+}
+
+.fila-pie {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    padding-bottom: 56px;
+}
+
+.columna-pie {
+    flex: 1 1 240px;
+}
+
+.logo-pie {
+    width: 170px;
+}
+
+.columna-pie > p {
+    max-width: 290px;
+    margin-top: 25px;
+    font-size: 15px;
+}
+
+.enlaces-pie,
+.lista-contacto-pie {
+    margin: 24px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 14px;
+}
+
+.enlaces-pie li,
+.lista-contacto-pie li {
+    margin-top: 10px;
+}
+
+.pie-derechos {
+    padding: 22px;
+    border-top: 1px solid var(--borde-claro);
+    font-family: var(--mono);
+    font-size: 10px;
+    text-align: center;
+}
+
+
+/* ==========================================================
+   5. INDEX.HTML
+   ========================================================== */
+
+/* ---------- 5.1 Portada ---------- */
+
+.portada {
+    background-color: var(--rosa-claro);
+    color: var(--fucsia);
+}
+
+.portada-interior {
+    padding-top: 52px;
+}
+
+.portada-interior > .sobretitulo {
+    text-align: center;
+}
+
+.portada-centro {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    padding: 42px 0 32px;
+}
+
+h1 {
+    flex: 0 1 auto;
+}
+
+.portada-centro h1 {
+    flex: 1 1 300px;
+}
+
+.titulo-cursiva {
+    font-style: italic;
+}
+
+.portada-ilustracion {
+    flex: 1 1 280px;
+    max-width: 340px;
+}
+
+.portada-inferior {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 28px;
+    padding: 12px 0 48px;
+}
+
+.portada-inferior > p {
+    flex: 1 1 300px;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.portada-botones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.enlace-simple {
+    font-size: 14px;
+}
+
+.seguir {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 0;
+    border-top: 1px solid var(--borde-claro);
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.seguir span {
+    font-size: 22px;
+}
+
+
+/* ---------- 5.2 Favoritos (tarjetas) ---------- */
+
+.destacados {
+    padding: 80px 0;
+}
+
+.destacados-encabezado {
+    margin-bottom: 48px;
+    text-align: center;
+}
+
+.destacados-encabezado .sobretitulo {
+    margin-bottom: 18px;
+}
+
+.descripcion-seccion {
+    margin-top: 20px;
+    color: var(--texto);
+}
+
+.fila-destacados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.tarjeta {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 280px;
+    max-width: 380px;
+}
+
+.tarjeta-imagen {
+    position: relative;
+}
+
+.tarjeta-imagen img {
+    height: 360px;
+    object-fit: cover;
+}
+
+.etiqueta-tarjeta {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 1;
+    padding: 5px 13px;
+    background-color: var(--rosa-claro);
+    border-radius: 999px;
+    font-size: 12px;
+}
+
+.tarjeta-contenido > .etiqueta-tarjeta {
+    position: static;
+    align-self: flex-start;
+    margin-bottom: 16px;
+}
+
+.tarjeta-contenido {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding-top: 24px;
+}
+
+.tarjeta-categoria {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.tarjeta-contenido > p {
+    margin: 16px 0 24px;
+    color: var(--texto);
+    font-size: 16px;
+}
+
+.tarjeta-pie {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--dorado);
+}
+
+.precio {
+    font-family: var(--mono);
+    font-size: 16px;
+}
+
+.destacados-boton-final {
+    margin-top: 48px;
+    text-align: center;
+}
+
+.nota-fotos {
+    margin-top: 20px;
+    color: var(--texto);
+    font-size: 12px;
+    text-align: center;
+}
+
+
+/* ---------- 5.3 Eventos (dos columnas imagen + texto) ---------- */
+
+.eventos {
+    padding-bottom: 80px;
+}
+
+.dos-columnas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 48px;
+}
+
+.dos-columnas > div {
+    flex: 1 1 300px;
+}
+
+.eventos .columna-imagen img {
+    height: 520px;
+    object-fit: cover;
+}
+
+.eventos .sobretitulo {
+    margin-bottom: 24px;
+}
+
+.eventos h2 {
+    max-width: 460px;
+}
+
+.descripcion-evento {
+    margin-top: 22px;
+    color: var(--texto);
+}
+
+.lista-beneficios {
+    margin: 28px 0;
+    padding-left: 20px;
+    color: var(--texto);
+    font-size: 15px;
+}
+
+.lista-beneficios li {
+    padding: 13px 0;
+    border-top: 1px solid var(--borde-suave);
+}
+
+
+/* ---------- 5.4 Sucursales ---------- */
+
+.sucursales {
+    padding: 80px 0;
+    border-top: 1px solid var(--dorado);
+}
+
+.fila-sucursales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+}
+
+.tarjeta-sucursal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1 1 300px;
+    padding-top: 20px;
+    border-top: 1px solid var(--dorado);
+}
+
+.sucursal-direccion {
+    max-width: 440px;
+    margin-top: 18px;
+    color: var(--texto);
+}
+
+.sucursal-horario {
+    margin: 24px 0 28px;
+    color: var(--texto);
+    font-family: var(--mono);
+    font-size: 12px;
+}
+
+.sucursal-horario strong {
+    font-weight: 400;
+}
+
+
+/* ==========================================================
+   6. CATALOGO.HTML
+   ========================================================== */
+
+.catalogo__hero,
+.portada-contacto {
+    padding: 64px 0;
+    background-color: var(--rosa-claro);
+    border-bottom: 1px solid var(--borde-suave);
+    text-align: center;
+}
+
+.catalogo__titulo,
+.portada-contacto h1 {
+    max-width: 850px;
+    margin: 20px auto;
+    font-size: 3rem;
+    letter-spacing: -1px;
+}
+
+.catalogo__intro,
+.descripcion-contacto {
+    max-width: 650px;
+    margin: 0 auto;
+    color: var(--texto);
+    font-size: 18px;
+}
+
+.catalogo__indice {
+    margin-top: 36px;
+}
+
+.catalogo__indice-lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.catalogo__indice-enlace {
+    display: inline-block;
+    padding: 10px 18px;
+    border: 1px solid var(--fucsia);
+    border-radius: 999px;
+    font-family: var(--fuente-menu);
+    font-size: 14px;
+}
+
+.catalogo__categoria {
+    padding: 64px 0;
+}
+
+.catalogo__categoria + .catalogo__categoria {
+    border-top: 1px solid var(--borde-claro);
+}
+
+.catalogo__categoria-encabezado {
+    max-width: 700px;
+    margin: 0 auto 36px;
+    text-align: center;
+}
+
+.catalogo__categoria-titulo {
+    margin: 14px 0 18px;
+    font-size: 2rem;
+}
+
+.catalogo__categoria-descripcion,
+.catalogo__producto-descripcion {
+    color: var(--texto);
+}
+
+.catalogo__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+}
+
+.catalogo__producto-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 280px;
+    max-width: 384px;
+    padding: 26px;
+    border: 1px solid var(--borde-suave);
+    border-radius: 14px;
+    background-color: var(--blanco);
+}
+
+.catalogo__producto-figura {
+    margin: 0 0 24px;
+}
+
+.catalogo__producto-img {
+    height: 240px;
+    object-fit: cover;
+}
+
+.catalogo__producto-cuerpo {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.catalogo__producto-titulo {
+    margin: 0 0 16px;
+    font-size: 26px;
+}
+
+.catalogo__producto-descripcion {
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+.catalogo__producto-pie {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--borde-claro);
+}
+
+.catalogo__producto-precio {
+    font-family: var(--mono);
+    font-size: 16px;
+}
+
+.catalogo__btn-accion {
+    display: inline-block;
+    position: relative;
+    top: 0;
+    padding: 9px 18px;
+    background-color: var(--blanco);
+    color: var(--fucsia);
+    border: 1px solid var(--fucsia);
+    border-radius: 999px;
+    font-family: var(--fuente-menu);
+    font-size: 14px;
+    transition: top 0.3s;
+}
+
+.catalogo__btn-accion:hover,
+.catalogo__btn-accion:focus-visible {
+    top: -3px;
+}
+
+.catalogo__cta {
+    padding: 64px 0;
+    background-color: var(--rosa-claro);
+    text-align: center;
+}
+
+.catalogo__cta-titulo {
+    font-size: 2rem;
+}
+
+.catalogo__cta-texto {
+    margin: 20px 0 28px;
+    color: var(--texto);
+}
+
+
+/* ==========================================================
+   7. CONTACTO.HTML
+   ========================================================== */
+
+.acciones-contacto {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.acciones-contacto .boton-mapa {
+    margin-top: 0;
+}
+
+.seccion-contacto {
+    padding: 64px 0;
+}
+
+.seccion-contacto .dos-columnas {
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.seccion-contacto h2 {
+    font-size: 2rem;
+}
+
+.informacion-contacto .sobretitulo {
+    margin-bottom: 18px;
+}
+
+.informacion-contacto > p,
+.contenedor-formulario > p {
+    margin-top: 20px;
+    color: var(--texto);
+}
+
+.informacion-contacto > .sobretitulo {
+    color: var(--fucsia);
+}
+
+.lista-contacto {
+    margin: 28px 0;
+    padding: 0;
+    list-style: none;
+    color: var(--texto);
+}
+
+.lista-contacto li {
+    padding: 18px 0;
+    border-top: 1px solid var(--borde-suave);
+}
+
+.lista-contacto strong {
+    color: var(--fucsia);
+}
+
+.informacion-contacto h3 {
+    margin-top: 36px;
+    font-size: 24px;
+}
+
+.informacion-contacto .cta-button {
+    margin-top: 24px;
+}
+
+.contenedor-formulario {
+    padding: 26px;
+    background-color: var(--rosa-claro);
+    border: 1px solid var(--borde-suave);
+    border-radius: 14px;
+}
+
+.contenedor-formulario > p {
+    font-size: 14px;
+}
+
+.formulario-contacto {
+    margin-top: 28px;
+}
+
+.campo-formulario {
+    margin-bottom: 20px;
+}
+
+.campo-formulario label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--texto);
+    font-family: var(--fuente-menu);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.campo-formulario input,
+.campo-formulario select,
+.campo-formulario textarea {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--blanco);
+    color: var(--texto);
+    border: 1px solid var(--rosa);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.campo-formulario input:focus-visible,
+.campo-formulario select:focus-visible,
+.campo-formulario textarea:focus-visible {
+    border-color: var(--fucsia);
+}
+
+.aviso-formulario {
+    margin: 24px 0;
+    color: var(--texto);
+    font-size: 14px;
+}
+
+.boton-enviar {
+    display: inline-block;
+    padding: 14px 26px;
+    border: 1px solid var(--fucsia);
+    border-radius: 999px;
+    background-color: var(--rosa-claro);
+    color: var(--fucsia);
+    font-family: var(--fuente-menu);
+    font-size: 16px;
+}
+
+.boton-enviar[disabled] {
+    opacity: 0.6;
+}
+
+
+/* ==========================================================
+   8. SOBRENOSOTROS.HTML
+   ========================================================== */
+
+.pagina-nosotros .portada-centro {
+    text-align: center;
+}
+
+.pagina-nosotros .portada-centro h1 {
+    font-size: 3rem;
+}
+
+.pagina-nosotros .portada-inferior {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.historia-nosotros {
+    padding: 64px 0;
+}
+
+.pagina-nosotros .columna-texto {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.pagina-nosotros .destacados {
+    padding: 64px 0;
+    background-color: var(--rosa-claro);
+}
+
+.pagina-nosotros .tarjeta {
+    padding: 28px;
+    border: 1px solid var(--borde-suave);
+    border-radius: 14px;
+    background-color: var(--blanco);
+}
+
+.pagina-nosotros .tarjeta-contenido {
+    padding-top: 0;
+}
+
+.pagina-nosotros .tarjeta h3,
+.pagina-nosotros .tarjeta-sucursal h3 {
+    font-size: 24px;
+}
+
+.pagina-nosotros .fila-sucursales {
+    justify-content: center;
+    gap: 28px;
+}
+
+.pagina-nosotros .tarjeta-sucursal {
+    flex: 1 1 260px;
+    max-width: 380px;
+    padding: 24px;
+}
+
+.pagina-nosotros .tarjeta-sucursal > p {
+    margin-top: 16px;
+    color: var(--texto);
+}
+
+.cierre-nosotros {
+    padding: 64px 0;
+    background-color: var(--rosa-claro);
+    text-align: center;
+}
+
+.cierre-nosotros h2 {
+    max-width: 100%;
+}
+
+.cierre-nosotros .boton-whatsapp {
+    margin-top: 28px;
+}
+
+
+/* ==========================================================
+   9. BREAKPOINTS (diseno responsive)
+   ========================================================== */
+
+/* ---------- Tablet horizontal (hasta 992px) ---------- */
+@media (max-width: 992px) {
+
+    h1 {
+        font-size: 3.2rem;
+    }
+
+    h2 {
+        font-size: 2.2rem;
+    }
+
+    .destacados,
+    .sucursales {
+        padding: 64px 0;
+    }
+
+    .eventos .columna-imagen img {
+        height: 420px;
+    }
+
+    .fila-pie {
+        gap: 32px;
+    }
+}
+
+/* ---------- Tablet vertical (hasta 768px) ---------- */
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 2.6rem;
+        letter-spacing: -1px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    .nav-container {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .nav-menu {
+        flex: 1 1 100%;
+        order: 3;
+    }
+
+    .portada-interior {
+        padding-top: 32px;
+    }
+
+    .portada-centro {
+        text-align: center;
+        gap: 24px;
+    }
+
+    .portada-inferior {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .destacados,
+    .sucursales,
+    .seccion-contacto,
+    .catalogo__categoria,
+    .catalogo__cta {
+        padding: 48px 0;
+    }
+
+    .eventos {
+        padding-bottom: 48px;
+    }
+
+    .dos-columnas {
+        gap: 28px;
+    }
+
+    .eventos .columna-imagen img {
+        height: 340px;
+    }
+
+    .tarjeta-imagen img {
+        height: 300px;
+    }
+
+    .catalogo__hero,
+    .portada-contacto {
+        padding: 48px 0;
+    }
+
+    .catalogo__titulo,
+    .portada-contacto h1 {
+        font-size: 2.2rem;
+    }
+
+    .catalogo__categoria-titulo,
+    .catalogo__cta-titulo,
+    .seccion-contacto h2 {
+        font-size: 1.7rem;
+    }
+
+    .pagina-nosotros .portada-centro h1 {
+        font-size: 2.4rem;
+    }
+
+    .pagina-nosotros .destacados,
+    .historia-nosotros,
+    .cierre-nosotros {
+        padding: 48px 0;
+    }
+
+    .fila-pie {
+        text-align: center;
+        justify-content: center;
+    }
+
+    .columna-pie > p {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* ---------- Celular (hasta 480px) ---------- */
+@media (max-width: 480px) {
+
+    body {
+        font-size: 16px;
+    }
+
+    .contenedor {
+        width: 92%;
+    }
+
+    h1 {
+        font-size: 2.1rem;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    h3 {
+        font-size: 24px;
+    }
+
+    .logo {
+        width: 120px;
+    }
+
+    .nav-menu {
+        gap: 8px 16px;
+    }
+
+    .nav-menu a {
+        font-size: 15px;
+    }
+
+    .cta-button,
+    .boton-primario,
+    .boton-whatsapp,
+    .boton-mapa,
+    .boton-enviar {
+        padding: 12px 22px;
+    }
+
+    .portada-botones {
+        width: 100%;
+    }
+
+    .portada-inferior > p {
+        font-size: 16px;
+    }
+
+    .tarjeta-imagen img {
+        height: 240px;
+    }
+
+    .eventos .columna-imagen img {
+        height: 260px;
+    }
+
+    .catalogo__producto-card,
+    .pagina-nosotros .tarjeta {
+        padding: 20px;
+    }
+
+    .catalogo__producto-img {
+        height: 200px;
+    }
+
+    .catalogo__titulo,
+    .portada-contacto h1 {
+        font-size: 1.9rem;
+    }
+
+    .catalogo__intro,
+    .descripcion-contacto {
+        font-size: 16px;
+    }
+
+    .contenedor-formulario {
+        padding: 18px;
+    }
+
+    .pagina-nosotros .portada-centro h1 {
+        font-size: 2rem;
+    }
+
+    .pie-derechos {
+        padding: 16px;
+    }
+}
