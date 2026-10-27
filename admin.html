@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración · Fragola Postres</title>
+    <meta name="description" content="Panel de administración de Fragola Postres.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
+</head>
+
+<body class="pagina-admin">
+
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <header class="cabecera">
+        <nav class="nav-container contenedor" aria-label="Navegación principal">
+            <a class="logo" href="index.html" aria-label="Fragola, inicio">
+                <img src="img/logo-fragola.png" alt="Fragola bakery">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="nav-sesion" data-nav-sesion></div>
+        </nav>
+    </header>
+
+    <main id="contenido" class="pagina-admin">
+        <section class="catalogo__hero cabecera-seccion">
+            <div class="contenedor">
+                <p class="sobretitulo">ADMINISTRACIÓN</p>
+                <h1 class="catalogo__titulo">Panel de <span class="titulo-cursiva">Fragola.</span></h1>
+                <p class="catalogo__intro">Gestiona el catálogo, da seguimiento a las ventas y administra los roles de usuario.</p>
+            </div>
+        </section>
+
+        <div class="contenedor seccion-app">
+            <div class="pestanas pestanas--panel" role="tablist" aria-label="Secciones del panel">
+                <button type="button" role="tab" id="tab-resumen" aria-controls="panel-resumen" data-seccion="resumen">Resumen</button>
+                <button type="button" role="tab" id="tab-postres" aria-controls="panel-postres" data-seccion="postres">Postres</button>
+                <button type="button" role="tab" id="tab-transacciones" aria-controls="panel-transacciones" data-seccion="transacciones">Transacciones</button>
+                <button type="button" role="tab" id="tab-usuarios" aria-controls="panel-usuarios" data-seccion="usuarios">Usuarios</button>
+            </div>
+
+            <!-- ============ RESUMEN / INDICADORES ============ -->
+            <section id="panel-resumen" role="tabpanel" aria-labelledby="tab-resumen" hidden>
+                <div id="contenido-resumen"></div>
+                <div class="zona-peligro">
+                    <div>
+                        <h2>Datos de prueba</h2>
+                        <p>Restablece el catálogo, los usuarios y las transacciones a los datos iniciales. Se cerrará la sesión de usuarios creados después.</p>
+                    </div>
+                    <button type="button" class="boton boton--peligro" id="boton-restablecer">Restablecer datos</button>
+                </div>
+            </section>
+
+            <!-- ============ POSTRES (CRUD) ============ -->
+            <section id="panel-postres" role="tabpanel" aria-labelledby="tab-postres" hidden>
+                <form class="barra-herramientas" id="filtros-postres" role="search">
+                    <div class="campo-formulario barra-filtros__busqueda">
+                        <label for="buscar-postre">Buscar</label>
+                        <input type="search" id="buscar-postre" name="buscar" placeholder="Nombre o descripción">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="categoria-postre">Categoría</label>
+                        <select id="categoria-postre" name="categoria"><option value="todas">Todas</option></select>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="orden-postre">Ordenar</label>
+                        <select id="orden-postre" name="orden">
+                            <option value="nombre">Nombre (A-Z)</option>
+                            <option value="precio-asc">Precio menor</option>
+                            <option value="precio-desc">Precio mayor</option>
+                            <option value="recientes">Última actualización</option>
+                        </select>
+                    </div>
+                    <button type="button" class="boton boton--primario" id="boton-nuevo-postre">+ Nuevo postre</button>
+                </form>
+                <p class="barra-herramientas__resumen" id="resumen-postres" aria-live="polite"></p>
+                <div id="tabla-postres"></div>
+            </section>
+
+            <!-- ============ TRANSACCIONES (CRUD) ============ -->
+            <section id="panel-transacciones" role="tabpanel" aria-labelledby="tab-transacciones" hidden>
+                <form class="barra-herramientas" id="filtros-transacciones" role="search">
+                    <div class="campo-formulario barra-filtros__busqueda">
+                        <label for="buscar-trx">Buscar</label>
+                        <input type="search" id="buscar-trx" name="texto" placeholder="Folio, cliente o correo">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="estado-trx">Estado</label>
+                        <select id="estado-trx" name="estado"><option value="todos">Todos</option></select>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="desde-trx">Desde</label>
+                        <input type="date" id="desde-trx" name="desde">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="hasta-trx">Hasta</label>
+                        <input type="date" id="hasta-trx" name="hasta">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="orden-trx">Ordenar</label>
+                        <select id="orden-trx" name="orden">
+                            <option value="recientes">Más recientes</option>
+                            <option value="antiguas">Más antiguas</option>
+                            <option value="total-desc">Mayor total</option>
+                            <option value="total-asc">Menor total</option>
+                            <option value="entrega">Fecha de entrega</option>
+                        </select>
+                    </div>
+                    <a class="boton boton--primario" href="catalogo.html">+ Registrar venta</a>
+                </form>
+                <p class="barra-herramientas__resumen" id="resumen-transacciones" aria-live="polite"></p>
+                <div id="tabla-transacciones"></div>
+            </section>
+
+            <!-- ============ USUARIOS Y ROLES ============ -->
+            <section id="panel-usuarios" role="tabpanel" aria-labelledby="tab-usuarios" hidden>
+                <p class="ayuda-campo">Las cuentas nuevas siempre se registran como <strong>cliente</strong>. Solo un administrador puede otorgar o quitar el rol de administrador.</p>
+                <div id="tabla-usuarios"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Formulario de postre (crear / editar) -->
+    <dialog class="dialogo" id="dialogo-postre" aria-labelledby="titulo-dialogo-postre">
+        <form class="dialogo__cuerpo" id="form-postre" novalidate>
+            <header class="dialogo__encabezado">
+                <h2 class="dialogo__titulo" id="titulo-dialogo-postre">Nuevo postre</h2>
+                <button type="button" class="boton-icono" data-cerrar-dialogo aria-label="Cerrar">✕</button>
+            </header>
+            <div class="fila-campos">
+                <div class="campo-formulario">
+                    <label for="postre-nombre">Nombre *</label>
+                    <input type="text" id="postre-nombre" name="nombre" maxlength="80" required>
+                </div>
+                <div class="campo-formulario">
+                    <label for="postre-categoria">Categoría *</label>
+                    <select id="postre-categoria" name="categoria" required></select>
+                </div>
+            </div>
+            <div class="campo-formulario">
+                <label for="postre-descripcion">Descripción *</label>
+                <textarea id="postre-descripcion" name="descripcion" rows="3" maxlength="300" required></textarea>
+                <p class="ayuda-campo"><span data-contador-descripcion>0</span>/300 caracteres</p>
+            </div>
+            <div class="fila-campos fila-campos--imagen">
+                <div class="campo-formulario">
+                    <label for="postre-imagen">Imagen *</label>
+                    <select id="postre-imagen-lista" aria-label="Elegir imagen de la carpeta img"></select>
+                    <input type="text" id="postre-imagen" name="imagen" placeholder="img/archivo.jpg o https://…" required>
+                    <p class="ayuda-campo">Elige una imagen de la lista o pega una URL https://</p>
+                </div>
+                <img class="vista-previa-imagen" id="vista-previa" alt="Vista previa de la imagen" src="img/ilustracion-pastel.png">
+            </div>
+
+            <fieldset class="grupo-campos" data-campo="variantes">
+                <legend>Presentaciones y precios *</legend>
+                <div id="lista-variantes" class="lista-variantes"></div>
+                <button type="button" class="boton-texto" id="boton-agregar-variante">+ Agregar presentación</button>
+            </fieldset>
+
+            <div class="fila-campos">
+                <div class="campo-formulario">
+                    <label for="postre-minimo">Cantidad mínima por pedido *</label>
+                    <input type="number" id="postre-minimo" name="minimo" min="1" max="100" step="1" value="1" required>
+                </div>
+                <label class="casilla casilla--campo">
+                    <input type="checkbox" name="disponible" checked> Disponible para la venta
+                </label>
+            </div>
+
+            <div class="dialogo__acciones">
+                <button type="button" class="boton boton--secundario" data-cerrar-dialogo>Cancelar</button>
+                <button type="submit" class="boton boton--primario" id="boton-guardar-postre">Guardar postre</button>
+            </div>
+        </form>
+    </dialog>
+
+    <footer class="pie">
+        <div class="contenedor fila-pie">
+            <div class="columna-pie">
+                <a class="logo logo-pie" href="index.html">
+                    <img alt="Fragola bakery" src="img/logo-fragola.png">
+                </a>
+                <p>Repostería artesanal creada con pasión para llenar de dulzura tus momentos más especiales</p>
+            </div>
+            <div class="columna-pie">
+                <h4>Navegación</h4>
+                <ul class="enlaces-pie">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="catalogo.html">Catálogo</a></li>
+                    <li><a href="sobreNosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="pedidos.html">Mis pedidos</a></li>
+                </ul>
+            </div>
+            <div class="columna-pie contacto-pie">
+                <h4>Atención y Pedidos</h4>
+                <ul class="lista-contacto-pie">
+                    <li><a href="contacto.html">Consulta por tu pedido</a></li>
+                    <li><a href="https://www.instagram.com/fragola.postres" rel="noopener noreferrer" target="_blank">@fragola.postres</a></li>
+                    <li><span>La Mascota &amp; Epic Plaza</span></li>
+                    <li><span>Encargos con 48h de anticipación</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pie-derechos">
+            <p>2026 Fragola Postres - Proyecto de Desarrollo Web</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/ui/pagina-admin.js"></script>
+</body>
+
+</html>
