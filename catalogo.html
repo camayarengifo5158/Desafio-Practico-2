@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo · Fragola Postres</title>
+    <meta name="description" content="Catálogo de Fragola: arma tu pedido de postres artesanales en línea.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
+</head>
+
+<body class="pagina-catalogo">
+
+    <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
+
+    <header class="cabecera">
+        <nav class="nav-container contenedor" aria-label="Navegación principal">
+            <a class="logo" href="index.html" aria-label="Fragola, inicio">
+                <img src="img/logo-fragola.png" alt="Fragola bakery">
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a class="activo" aria-current="page" href="catalogo.html">Catálogo</a></li>
+                <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+            <div class="nav-sesion" data-nav-sesion></div>
+        </nav>
+    </header>
+
+    <main id="contenido" class="catalogo">
+
+        <!-- Encabezado y herramientas de búsqueda -->
+        <section class="catalogo__hero">
+            <div class="contenedor catalogo__hero-interior">
+                <p class="sobretitulo catalogo__sobretitulo">NUESTRO MENÚ</p>
+                <h1 class="catalogo__titulo">Catálogo de <span class="titulo-cursiva">postres.</span></h1>
+                <p class="catalogo__intro">Cheesecakes artesanales, postres fríos y pastelería fina. Arma tu pedido y recíbelo con 48 horas de anticipación.</p>
+
+                <form class="barra-filtros" id="filtros-catalogo" role="search" aria-label="Buscar y filtrar postres">
+                    <div class="campo-formulario barra-filtros__busqueda">
+                        <label for="buscar">Buscar</label>
+                        <input type="search" id="buscar" name="buscar" placeholder="Ej. cheesecake, keto, galleta…" autocomplete="off">
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="filtro-categoria">Categoría</label>
+                        <select id="filtro-categoria" name="categoria">
+                            <option value="todas">Todas</option>
+                        </select>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="orden">Ordenar por</label>
+                        <select id="orden" name="orden">
+                            <option value="nombre">Nombre (A-Z)</option>
+                            <option value="precio-asc">Precio: menor a mayor</option>
+                            <option value="precio-desc">Precio: mayor a menor</option>
+                            <option value="recientes">Recién actualizados</option>
+                        </select>
+                    </div>
+                    <label class="casilla">
+                        <input type="checkbox" name="soloDisponibles" id="solo-disponibles">
+                        Solo disponibles
+                    </label>
+                </form>
+                <p class="barra-filtros__conteo" id="conteo-resultados" aria-live="polite"></p>
+            </div>
+        </section>
+
+        <!-- Aquí JavaScript dibuja las categorías y tarjetas de postres -->
+        <div id="catalogo-resultados"></div>
+
+        <section class="catalogo__cta" aria-labelledby="titulo-cta">
+            <div class="contenedor">
+                <h2 class="catalogo__cta-titulo" id="titulo-cta">¿Buscas algo personalizado?</h2>
+                <p class="catalogo__cta-texto">Encargos con 48 horas de anticipación. Escríbenos y diseñamos tu pedido.</p>
+                <a class="cta-button catalogo__cta-enlace" href="contacto.html">Cotizar pedido</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Botón flotante del carrito -->
+    <button type="button" class="carrito-flotante" id="boton-carrito" aria-controls="carrito" aria-expanded="false">
+        Carrito · <span data-contador-flotante>0</span>
+    </button>
+
+    <!-- Panel lateral del carrito -->
+    <aside class="carrito" id="carrito" aria-labelledby="titulo-carrito" hidden>
+        <div class="carrito__fondo" data-cerrar-carrito></div>
+        <div class="carrito__panel">
+            <header class="carrito__encabezado">
+                <h2 id="titulo-carrito">Tu carrito</h2>
+                <button type="button" class="boton-icono" data-cerrar-carrito aria-label="Cerrar carrito">✕</button>
+            </header>
+            <div class="carrito__lineas" id="carrito-lineas"></div>
+            <footer class="carrito__pie">
+                <p class="carrito__subtotal">Subtotal <strong id="carrito-subtotal">$0.00</strong></p>
+                <p class="carrito__nota">El envío se calcula al finalizar la compra.</p>
+                <button type="button" class="boton boton--primario boton--bloque" id="boton-finalizar">Finalizar compra</button>
+                <button type="button" class="boton-texto" id="boton-vaciar">Vaciar carrito</button>
+            </footer>
+        </div>
+    </aside>
+
+    <!-- Formulario de compra (checkout simulado) -->
+    <dialog class="dialogo" id="dialogo-checkout" aria-labelledby="titulo-checkout">
+        <form class="dialogo__cuerpo" id="form-checkout" novalidate>
+            <header class="dialogo__encabezado">
+                <h2 class="dialogo__titulo" id="titulo-checkout">Finalizar compra</h2>
+                <button type="button" class="boton-icono" data-cerrar-dialogo aria-label="Cerrar">✕</button>
+            </header>
+
+            <fieldset class="grupo-campos">
+                <legend>Entrega</legend>
+                <div class="opciones-radio">
+                    <label><input type="radio" name="tipo" value="retiro" checked> Retiro en sucursal</label>
+                    <label><input type="radio" name="tipo" value="domicilio"> Entrega a domicilio (+<span data-costo-envio></span>)</label>
+                </div>
+                <div class="fila-campos">
+                    <div class="campo-formulario">
+                        <label for="checkout-sucursal">Sucursal que prepara tu pedido *</label>
+                        <select id="checkout-sucursal" name="sucursal" required></select>
+                    </div>
+                    <div class="campo-formulario">
+                        <label for="checkout-fecha">Fecha de entrega *</label>
+                        <input type="date" id="checkout-fecha" name="fecha" required>
+                    </div>
+                </div>
+                <div class="campo-formulario" data-solo-domicilio hidden>
+                    <label for="checkout-direccion">Dirección de entrega *</label>
+                    <textarea id="checkout-direccion" name="direccion" rows="2" maxlength="200" placeholder="Colonia, calle, número de casa y referencia"></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset class="grupo-campos">
+                <legend>Pago</legend>
+                <div class="opciones-radio" id="opciones-pago"></div>
+                <p class="aviso-simulacion">Pago simulado con fines académicos: no se solicitan ni guardan datos de tarjetas.</p>
+            </fieldset>
+
+            <div class="campo-formulario">
+                <label for="checkout-notas">Notas para la cocina (opcional)</label>
+                <textarea id="checkout-notas" name="notas" rows="2" maxlength="250" placeholder="Ej. dedicatoria, alergias, sabor preferido…"></textarea>
+            </div>
+
+            <div class="resumen-compra" id="resumen-checkout" aria-live="polite"></div>
+
+            <div class="dialogo__acciones">
+                <button type="button" class="boton boton--secundario" data-cerrar-dialogo>Seguir comprando</button>
+                <button type="submit" class="boton boton--primario" id="boton-pagar">Confirmar y pagar</button>
+            </div>
+        </form>
+    </dialog>
+
+    <footer class="pie">
+        <div class="contenedor fila-pie">
+            <div class="columna-pie">
+                <a class="logo logo-pie" href="index.html">
+                    <img alt="Fragola bakery" src="img/logo-fragola.png">
+                </a>
+                <p>Repostería artesanal creada con pasión para llenar de dulzura tus momentos más especiales</p>
+            </div>
+            <div class="columna-pie">
+                <h4>Navegación</h4>
+                <ul class="enlaces-pie">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="catalogo.html">Catálogo</a></li>
+                    <li><a href="sobreNosotros.html">Sobre Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="pedidos.html">Mis pedidos</a></li>
+                </ul>
+            </div>
+            <div class="columna-pie contacto-pie">
+                <h4>Atención y Pedidos</h4>
+                <ul class="lista-contacto-pie">
+                    <li><a href="contacto.html">Consulta por tu pedido</a></li>
+                    <li><a href="https://www.instagram.com/fragola.postres" rel="noopener noreferrer" target="_blank">@fragola.postres</a></li>
+                    <li><span>La Mascota &amp; Epic Plaza</span></li>
+                    <li><span>Encargos con 48h de anticipación</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pie-derechos">
+            <p>2026 Fragola Postres - Proyecto de Desarrollo Web</p>
+        </div>
+    </footer>
+
+    <script type="module" src="js/ui/pagina-catalogo.js"></script>
+</body>
+
+</html>
