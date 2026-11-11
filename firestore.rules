@@ -1,32 +1,97 @@
+// ==========================================================
+// REGLAS DE SEGURIDAD DE CLOUD FIRESTORE
+// Archivo: firestore.rules
+// ----------------------------------------------------------
+// ¿Para qué sirve este archivo?
+// Es el "guardaespaldas del servidor" en Google Cloud. Aunque
+// alguien intente manipular el código JavaScript desde la consola
+// del navegador (F12) o enviar peticiones HTTP falsificadas,
+// estas reglas se ejecutan directamente en los servidores de Google
+// y rechazan cualquier intento no autorizado con "Missing or insufficient permissions".
+// ==========================================================
+
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    // ----------------------------------------------------------
+    // FUNCIÓN AUXILIAR: esAdmin()
+    // ¿Para qué sirve?
+    // 1. Revisa si la persona está autenticada en Firebase Auth (`request.auth != null`).
+    // 2. Lee el documento del usuario en la colección /usuarios/ con su UID.
+    // 3. Verifica si su campo `rol` es exactamente igual a 'admin'.
+    // ----------------------------------------------------------
     function esAdmin() {
       return request.auth != null && 
         get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'admin';
     }
 
+    // ==========================================================
+    // 1. COLECCIÓN: postres
+    // ==========================================================
     match /postres/{postreId} {
+      // Lectura pública: cualquier persona en internet (incluso sin registrarse)
+      // puede ver los postres, sus fotos, descripciones y precios.
       allow read: if true;
+
+      // Escritura restringida: solo un administrador autenticado puede
+      // agregar postres nuevos, cambiar precios o eliminarlos.
       allow write: if esAdmin();
     }
 
+    // ==========================================================
+    // 2. COLECCIÓN: usuarios
+    // ==========================================================
     match /usuarios/{userId} {
+      // Solo usuarios que hayan iniciado sesión pueden consultar perfiles
       allow read: if request.auth != null;
+
+      // Al registrarse, un usuario solo puede asignarse el rol 'cliente'.
+      // Un usuario común jamás puede registrarse como 'admin' por su cuenta.
       allow create: if request.auth != null && (request.resource.data.rol == 'cliente' || esAdmin());
-      allow update: if esAdmin() || (request.auth.uid == userId && request.resource.data.rol == resource.data.rol);
+
+      // Actualización segura (anti-escalamiento de privilegios):
+      // El administrador puede editar todo; pero un cliente común solo puede
+      // editar su propio perfil (su propio UID) y tiene estrictamente prohibido
+      // cambiarse el rol (`request.resource.data.rol == resource.data.rol`).
+      allow update: if esAdmin() || (
+        request.auth.uid == userId && 
+        request.resource.data.rol == resource.data.rol
+      );
+
+      // Solo un administrador puede eliminar cuentas
       allow delete: if esAdmin();
     }
 
+    // ==========================================================
+    // 3. COLECCIÓN: transacciones (Pedidos)
+    // ==========================================================
     match /transacciones/{transaccionId} {
-      allow read: if request.auth != null && (resource == null || resource.data.clienteId == request.auth.uid || esAdmin());
-      allow create: if request.auth != null && (request.resource.data.clienteId == request.auth.uid || esAdmin());
+      // Regla de privacidad estricta:
+      // Un cliente solo puede leer pedidos que le pertenezcan a él (`clienteId == request.auth.uid`).
+      // El administrador tiene permiso de leer todos los pedidos para poder gestionarlos.
+      allow read: if request.auth != null && (
+        resource == null || 
+        resource.data.clienteId == request.auth.uid || 
+        esAdmin()
+      );
+
+      // Al crear un pedido en el Checkout:
+      // El cliente solo puede guardar pedidos a su propio nombre y UID (`request.resource.data.clienteId == request.auth.uid`).
+      allow create: if request.auth != null && (
+        request.resource.data.clienteId == request.auth.uid || 
+        esAdmin()
+      );
+
+      // Al modificar un pedido:
+      // El cliente solo puede modificar pedidos suyos y NO puede transferirle el pedido a otra persona.
       allow update: if esAdmin() || (
         request.auth != null && 
         resource.data.clienteId == request.auth.uid && 
         request.resource.data.clienteId == resource.data.clienteId
       );
+
+      // Solo un administrador puede borrar pedidos de la base de datos
       allow delete: if esAdmin();
     }
   }

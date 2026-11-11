@@ -1,32 +1,75 @@
 /* ==========================================================
-   PÁGINA: COMPROBANTE DE COMPRA
-   Lee el folio de la URL (comprobante.html?folio=FRG-00010),
-   consulta la transacción (solo su dueño o un admin pueden verla)
-   y dibuja el comprobante listo para imprimir o guardar en PDF.
+   PÁGINA: COMPROBANTE OFICIAL DE COMPRA (Capa UI)
+   Archivo: js/ui/pagina-comprobante.js
+   ----------------------------------------------------------
+   ¿Para qué sirve este archivo?
+   Es el generador de la "factura o recibo digital" de la pastelería.
+   Se abre automáticamente tras finalizar una compra o cuando el cliente
+   o el administrador hacen clic en "Ver comprobante".
+
+   ¿Cómo funciona?
+   1. Lee el código de folio desde la URL (ej: `comprobante.html?folio=FRG-48192`).
+   2. Consulta a Firestore mediante `obtenerTransaccion(folio)`.
+      (Las reglas de seguridad se aseguran de que solo el cliente dueño
+      o un administrador puedan ver este documento).
+   3. Realiza el desglose financiero del IVA del 13% de El Salvador.
+   4. Construye una factura elegante y lista para impresión en papel o PDF
+      usando los estilos para impresora (`@media print` y `window.print()`).
    ========================================================== */
 
+// Importamos la función para buscar pedidos por ID o por Folio
 import { obtenerTransaccion } from '../data/transacciones-repo.js';
+
+// Importamos constantes de negocio (tasa del 13% de IVA y tipos de entrega)
 import { NEGOCIO, TIPOS_ENTREGA } from '../config/app-config.js';
+
+// Traemos formateadores de dinero, fechas, sanitizador XSS y redondeo
 import { dinero, fecha, fechaHora, escaparHTML, redondear } from '../logica/formato.js';
+
+// Traemos herramientas de inicialización de página y manejo de estados
 import { iniciarPagina, mostrarCargando, mostrarError, parametroURL } from './comun.js';
+
+// Traemos las plantillas de insignias de colores y nombres de método de pago
 import { insigniaEstado, insigniaPago, textoMetodoPago } from './plantillas.js';
 
+// Guardia de seguridad: Se exige sesión activa para ver comprobantes
 const usuario = iniciarPagina({ requiere: 'sesion' });
 const contenedor = document.querySelector('#comprobante');
 const botonImprimir = document.querySelector('#boton-imprimir');
 
+// Adaptamos el botón de volver según el rol de la persona:
+// - Si es administrador, lo devuelve a la tabla de transacciones del panel.
+// - Si es cliente, lo devuelve a su lista de "Mis Pedidos".
 if (usuario?.rol === 'admin') {
     document.querySelector('.comprobante__acciones a').href = 'admin.html#transacciones';
     document.querySelector('.comprobante__acciones a').textContent = '← Panel de transacciones';
 }
 
+/* ----------------------------------------------------------
+   pintarComprobante(t)
+   ¿Para qué sirve?
+   Renderiza la estructura completa del comprobante:
+   1. Desglose del IVA (13% en El Salvador):
+      Como los precios de Fragola ya tienen el impuesto incluido,
+      calculamos la base imponible (`total / 1.13`) y el monto del IVA (`total - base`).
+   2. Si la URL incluye `?nuevo=1`, muestra un banner verde de felicitación
+      ("¡Gracias por tu compra!").
+   3. Encabezado con logotipo, folio destacado y fecha.
+   4. Bloques de información: datos del cliente, método de entrega y de pago.
+   5. Tabla de productos con cantidades, precios unitarios y subtotales.
+   6. Totales finales y advertencia académica de validez fiscal.
+   ---------------------------------------------------------- */
 function pintarComprobante(t) {
-    // Los precios incluyen IVA: se muestra el desglose informativo
+    // Matemática fiscal: desglose del 13% de IVA salvadoreño
     const baseImponible = redondear(t.total / (1 + NEGOCIO.tasaIVA));
     const iva = redondear(t.total - baseImponible);
+    
+    // Si viene recién saliendo del proceso de compra
     const esNuevo = parametroURL('nuevo') === '1';
 
+    // Cambiamos el título de la pestaña del navegador para que al imprimir/guardar en PDF salga con este nombre
     document.title = `Comprobante ${t.folio} · Fragola Postres`;
+    
     contenedor.innerHTML = `
         ${esNuevo ? `
         <div class="alerta alerta--exito no-imprimir" role="status">
@@ -70,7 +113,13 @@ function pintarComprobante(t) {
                 <table class="tabla comprobante__tabla">
                     <caption class="visualmente-oculto">Detalle de productos</caption>
                     <thead>
-                        <tr><th scope="col">Producto</th><th scope="col">Presentación</th><th scope="col" class="num">Cant.</th><th scope="col" class="num">Precio</th><th scope="col" class="num">Subtotal</th></tr>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Presentación</th>
+                            <th scope="col" class="num">Cant.</th>
+                            <th scope="col" class="num">Precio</th>
+                            <th scope="col" class="num">Subtotal</th>
+                        </tr>
                     </thead>
                     <tbody>
                         ${t.items.map((i) => `
@@ -99,9 +148,16 @@ function pintarComprobante(t) {
                 <p>Última actualización: ${fechaHora(t.actualizadaEn)}</p>
             </footer>
         </article>`;
+        
+    // Habilitamos el botón de imprimir una vez el comprobante esté dibujado
     botonImprimir.disabled = false;
 }
 
+/* ----------------------------------------------------------
+   cargar()
+   Lee el parámetro `folio` de la barra de direcciones y
+   solicita la orden a Firestore.
+   ---------------------------------------------------------- */
 async function cargar() {
     const folio = parametroURL('folio');
     if (!folio) {
@@ -116,6 +172,10 @@ async function cargar() {
     }
 }
 
+// Conectamos el botón de imprimir con la orden nativa del navegador
 botonImprimir.addEventListener('click', () => window.print());
 
-if (usuario) cargar();
+// Si el usuario tiene sesión, cargamos el comprobante
+if (usuario) {
+    cargar();
+}

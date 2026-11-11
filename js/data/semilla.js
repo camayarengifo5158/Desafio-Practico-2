@@ -1,21 +1,43 @@
 /* ==========================================================
-   DATOS INICIALES (semilla)
-   Se cargan la primera vez que se abre la aplicación (o cuando
-   se presiona "Restablecer datos de prueba" en el panel).
-   Los postres vienen del catálogo del Desafío Práctico I.
-
-   Las contraseñas NO están en este archivo: solo su hash
-   SHA-256 con sal. Las credenciales de prueba se entregan por
-   Moodle, como pide el enunciado.
+   DATOS INICIALES Y SEMILLA (Capa de Datos / Inicialización)
+   Archivo: js/data/semilla.js
+   ----------------------------------------------------------
+   ¿Para qué sirve este archivo?
+   Es el "paquete de bienvenida" de la pastelería Fragola. Contiene:
+   1. El catálogo oficial completo de los 22 postres artesanales con
+      sus fotos, descripciones, categorías y precios por porción/entero
+      (heredados del Desafío Práctico I).
+   2. La función `restablecerDatosFirestore()`, que es el motor detrás
+      del botón "Restablecer datos de prueba" en el Panel de Administración.
+      Permite que si el profesor o los evaluadores borran o modifican datos
+      durante la prueba en vivo, puedan volver al estado perfecto original
+      con un solo clic sin tener que meter nada a mano.
+   3. Un conjunto de 9 pedidos realistas en diferentes estados
+      (pendientes, en preparación, listos, entregados y cancelados)
+      asociados al cliente de prueba Gabriel Méndez para poder mostrar
+      las pantallas de "Mis Pedidos" y los KPIs financieros al instante.
    ========================================================== */
 
+// Importamos constantes de configuración y roles
 import { CLAVES, VERSION_DATOS, NEGOCIO, ROLES } from '../config/app-config.js';
-import { leerSync, escribirSync } from './almacenamiento.js';
-import { db, doc, setDoc } from '../config/firebase.js'; // <-- AGREGAR ESTA LÍNEA AQUÍ
 
+// Importamos utilidades de almacenamiento local
+import { leerSync, escribirSync } from './almacenamiento.js';
+
+// Importamos las herramientas de Firebase Firestore para sembrar datos en la nube
+import { db, doc, setDoc } from '../config/firebase.js';
+
+// Fecha fija de referencia para que los registros de prueba tengan coherencia histórica
 const FECHA_BASE = '2026-09-01T10:00:00.000Z';
 
-// Atajo para crear un postre con valores por defecto
+/* ----------------------------------------------------------
+   FUNCIÓN AUXILIAR: postre(...)
+   ¿Para qué sirve?
+   Es una fábrica (factory) de postres. Para no tener que escribir
+   las mismas propiedades una y otra vez en los 22 postres, esta
+   función recibe solo lo esencial (nombre, foto, precios) y le
+   agrega los campos automáticos (ruta de imagen, fechas, disponibilidad).
+   ---------------------------------------------------------- */
 function postre(id, categoria, nombre, imagen, variantes, descripcion, minimo = 1, disponible = true) {
     return {
         id,
@@ -23,6 +45,7 @@ function postre(id, categoria, nombre, imagen, variantes, descripcion, minimo = 
         nombre,
         descripcion,
         imagen: `img/${imagen}`,
+        // Convertimos el arreglo de pares [nombre, precio] en objetos limpios
         variantes: variantes.map(([nombre, precio]) => ({ nombre, precio })),
         minimo,
         disponible,
@@ -31,8 +54,16 @@ function postre(id, categoria, nombre, imagen, variantes, descripcion, minimo = 
     };
 }
 
+/* ==========================================================
+   CATÁLOGO COMPLETO DE POSTRES (22 Productos)
+   Organizados en las 4 categorías oficiales:
+   - Tartas y Cheesecakes
+   - Individuales y Shots
+   - Especialidades
+   - Galletas
+   ========================================================== */
 export const POSTRES_INICIALES = [
-    // ---------- Tartas y Cheesecakes ----------
+    // ---------- 1. Tartas y Cheesecakes ----------
     postre('pst_paleo_choco', 'tartas', 'Paleo Chocolate Cheesecake', 'cat_paleo_chocolate-cake.jpg',
         [['Porción', 4.75], ['Entero', 38.00]],
         'El mismo paleo chocolate cake, pero con una suave capa de cheesecake endulzado con monkfruit y sin gluten.'),
@@ -49,7 +80,7 @@ export const POSTRES_INICIALES = [
         [['Unidad', 1.50]],
         'Tarta cremosa tradicional con base crocante y toque cítrico de limón.', 12),
 
-    // ---------- Individuales y Shots ----------
+    // ---------- 2. Individuales y Shots ----------
     postre('pst_tiramisu', 'individuales', 'Healthy Tiramisú', 'cat__healthy_tiramisu.jpg',
         [['Individual', 8.00]],
         'Capas de suspiro sin gluten ni azúcar remojado en café, con crema y topping de pistacho o cocoa.'),
@@ -72,7 +103,7 @@ export const POSTRES_INICIALES = [
         [['Unidad', 1.50]],
         'Mini donas horneadas con coberturas glaseadas de colores personalizadas.', 1, false),
 
-    // ---------- Especialidades ----------
+    // ---------- 3. Especialidades ----------
     postre('pst_pavlova_lemon', 'especialidades', 'Pavlova de Lemon Curd, Fresas y Blueberries', 'cat_pavlova_lemon_curd.jpg',
         [['Entera (10-12 personas)', 30.00]],
         'Espumilla crujiente por fuera y chewy por dentro, sin azúcar, con lemon curd, crema, fresas y blueberries.'),
@@ -92,7 +123,7 @@ export const POSTRES_INICIALES = [
         [['Bolsita 40 g', 3.75]],
         'Espumillas sin azúcar: original, fresa, chocolate, matcha, especias, café o de temporada.'),
 
-    // ---------- Galletas ----------
+    // ---------- 4. Galletas ----------
     postre('pst_lotus', 'galletas', 'Choco Chip Lotus Cookie', 'cat_choco_chips_lotus.jpg',
         [['Individual', 3.50], ['Caja de 6', 18.00]],
         'Galleta chunky crujiente por fuera y suave por dentro, con chispas y galleta Lotus Biscoff.'),
@@ -107,6 +138,7 @@ export const POSTRES_INICIALES = [
         'Rellena de nutella saludable, con harina de almendra y aceite de coco, endulzada con monkfruit.')
 ];
 
+// Usuarios demo originales (usados como referencia en la memoria local)
 export const USUARIOS_INICIALES = [
     {
         id: 'usr_admin',
@@ -137,8 +169,16 @@ export const USUARIOS_INICIALES = [
     }
 ];
 
-// ---------- Transacciones de ejemplo ----------
-// Se calculan a partir de los postres para que los totales siempre cuadren.
+/* ----------------------------------------------------------
+   TRANSACCIONES DE EJEMPLO
+   ¿Por qué son importantes?
+   Permiten que la aplicación muestre gráficos, estadísticas
+   de ventas, historial de pedidos y filtros sin esperar a que
+   alguien haga 10 compras manuales.
+   
+   La función `linea()` se asegura de consultar el postre real
+   para que los nombres, categorías y subtotales cuadren con precisión matemática.
+   ---------------------------------------------------------- */
 function linea(postreId, varianteIndice, cantidad) {
     const p = POSTRES_INICIALES.find((x) => x.id === postreId);
     const v = p.variantes[varianteIndice];
@@ -177,6 +217,14 @@ function transaccion(numero, usuario, fecha, items, opciones) {
     };
 }
 
+/* ----------------------------------------------------------
+   crearTransaccionesIniciales()
+   Genera una colección de 9 pedidos realistas en diferentes fechas
+   y con diferentes estados. Los pedidos asignados a `gabriel`
+   utilizan su UID real de Firebase Auth ('wnDdcH4P2aW7hhUy9BSHDeGlt0R2'),
+   lo que permite que al iniciar sesión con `gabrielmendez@gmail.com`
+   se vean inmediatamente sus pedidos en "Mis Pedidos".
+   ---------------------------------------------------------- */
 function crearTransaccionesIniciales() {
     const gabriel = {
         id: 'wnDdcH4P2aW7hhUy9BSHDeGlt0R2',
@@ -217,16 +265,27 @@ function crearTransaccionesIniciales() {
     ];
 }
 
-// Carga la semilla si es la primera vez o si cambió la versión de los datos
+/* ----------------------------------------------------------
+   asegurarDatosIniciales()
+   Mantenida por compatibilidad de interfaz. Como los datos ahora
+   viven permanentemente en Firestore, siempre devuelve true.
+   ---------------------------------------------------------- */
 export function asegurarDatosIniciales() {
     return true;
 }
 
+/* ----------------------------------------------------------
+   restablecerDatos()
+   Punto de entrada principal para restaurar la base de datos completa.
+   ---------------------------------------------------------- */
 export function restablecerDatos() {
     return restablecerDatosFirestore();
 }
 
-// Cargar catálogo de 22 postres directamente en Cloud Firestore
+/* ----------------------------------------------------------
+   cargarSemillaFirebase()
+   Sube exclusivamente el catálogo de los 22 postres a Cloud Firestore.
+   ---------------------------------------------------------- */
 export async function cargarSemillaFirebase() {
     console.log('Iniciando subida del catálogo a Cloud Firestore...');
     for (const p of POSTRES_INICIALES) {
@@ -237,24 +296,42 @@ export async function cargarSemillaFirebase() {
     console.log('Catálogo cargado con éxito en Firebase.');
 }
 
-// Restablecer catálogo y transacciones de prueba en Cloud Firestore
+/* ----------------------------------------------------------
+   restablecerDatosFirestore()
+   ¿Para qué sirve?
+   Es la función ejecutada por el botón del Panel de Administración.
+   1. Recorre los 22 postres y los sobreescribe en Firestore (restaura
+      precios originales, descripciones y disponibilidad).
+   2. Genera los 9 pedidos de prueba y los guarda en Firestore en la colección
+      'transacciones'.
+   3. Limpia el carrito local de compras en el navegador para empezar desde cero.
+   4. Emite el evento 'carrito:cambio' para vaciar la burbujita del carrito.
+   ---------------------------------------------------------- */
 export async function restablecerDatosFirestore() {
     console.log('Restableciendo catálogo y transacciones en Cloud Firestore...');
+    
+    // Paso 1: Restaurar catálogo de postres
     for (const p of POSTRES_INICIALES) {
         const { id, ...datos } = p;
         await setDoc(doc(db, 'postres', id), datos);
     }
 
+    // Paso 2: Restaurar pedidos de demostración
     const transacciones = crearTransaccionesIniciales();
     for (const t of transacciones) {
         const { id, ...datos } = t;
         await setDoc(doc(db, 'transacciones', id), datos);
     }
 
+    // Paso 3: Vaciar carrito local
     localStorage.removeItem(CLAVES.carrito);
     document.dispatchEvent(new CustomEvent('carrito:cambio', { detail: [] }));
     console.log('Catálogo y transacciones cargados con éxito en Firebase.');
 }
 
-window.cargarSemillaFirebase = cargarSemillaFirebase;
-window.restablecerDatosFirestore = restablecerDatosFirestore;
+// Exponemos las funciones en el objeto global `window` para poder ejecutarlas
+// desde la consola de desarrollador del navegador durante pruebas técnicas
+if (typeof window !== 'undefined') {
+    window.cargarSemillaFirebase = cargarSemillaFirebase;
+    window.restablecerDatosFirestore = restablecerDatosFirestore;
+}
