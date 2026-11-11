@@ -1,25 +1,40 @@
 /* ==========================================================
-   APP.CSS — componentes del Desafío Práctico II
-   Reutiliza las variables de style.css (colores y fuentes del
-   Desafío I) y agrega lo necesario para la parte interactiva.
-
-   INDICE
-   1. Utilidades y accesibilidad
-   2. Botones
-   3. Sesión en la cabecera
-   4. Formularios, filtros y errores
-   5. Estados (carga, vacío, error) y avisos
-   6. Catálogo dinámico y carrito
-   7. Diálogos
-   8. Ingresar
-   9. Mis pedidos
-   10. Insignias
-   11. Tablas
-   12. Panel de administración
-   13. Comprobante e impresión
-   14. Breakpoints
+   HOJA DE ESTILOS: COMPONENTES INTERACTIVOS Y APLICACIÓN
+   Archivo: css/app.css
+   ----------------------------------------------------------
+   ¿Para qué sirve este archivo?
+   Es el motor visual de la capa interactiva del Desafío Práctico II.
+   Mientras que `style.css` contiene la identidad visual base
+   (colores pasteles, tipografías y maquetación fija del Desafío I),
+   `app.css` implementa toda la interfaz de la aplicación dinámica:
+   
+   ÍNDICE GENERAL:
+   1. Utilidades y accesibilidad (saltar contenido, lectores de pantalla).
+   2. Sistema de botones (primarios, secundarios, peligro y con carga).
+   3. Sesión en la cabecera (menú de usuario, contador del carrito).
+   4. Formularios, filtros en tiempo real y validación de errores.
+   5. Estados visuales (animaciones de spinner, pantallas vacías y toasts flotantes).
+   6. Catálogo interactivo y panel deslizable del carrito (drawer).
+   7. Ventanas modales accesibles (<dialog>).
+   8. Pestañas y tarjetas de ingreso y registro.
+   9. Tarjetas de pedidos personales con seguimiento de estado.
+   10. Insignias de colores para estados de orden y pagos.
+   11. Tablas responsivas con diseño adaptable para móviles.
+   12. Panel de administración (indicadores KPIs, barras de progreso y cuadrículas).
+   13. Comprobante de compra y reglas para impresión en PDF (@media print).
+   14. Breakpoints para tablets y teléfonos móviles.
    ========================================================== */
 
+/* ----------------------------------------------------------
+   VARIABLES CSS GLOBALES (Paleta de Estados)
+   ¿Por qué están aquí?
+   Definimos un sistema de colores semántico:
+   - Verde: éxito y pedidos entregados/pagados.
+   - Ámbar: advertencias y pedidos pendientes.
+   - Azul: información y pedidos en preparación.
+   - Rojo: errores y cancelaciones.
+   - Sombra: elevación flotante para modales y notificaciones.
+   ---------------------------------------------------------- */
 :root {
     --verde: #2f7d4f;
     --verde-claro: #e8f5ec;
@@ -35,9 +50,18 @@
 }
 
 /* ==========================================================
-   1. UTILIDADES Y ACCESIBILIDAD
+   1. UTILIDADES Y ACCESIBILIDAD (A11y)
    ========================================================== */
 
+/* ----------------------------------------------------------
+   .visualmente-oculto (Técnica estándar W3C)
+   ¿Para qué sirve?
+   Si pones `display: none`, el elemento desaparece tanto para
+   quien ve la pantalla como para los lectores de pantalla de personas ciegas.
+   Esta clase encoge el elemento a 1x1 pixel y lo recorta con `clip: rect(...)`:
+   así no se ve en pantalla, pero un lector de pantalla sí lo lee
+   en voz alta para dar contexto a los botones y campos.
+   ---------------------------------------------------------- */
 .visualmente-oculto {
     position: absolute !important;
     width: 1px;

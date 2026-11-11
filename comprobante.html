@@ -1,20 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
 
+<!-- ==========================================================
+     PÁGINA: COMPROBANTE OFICIAL DE COMPRA (Estructura HTML)
+     Archivo: comprobante.html
+     ----------------------------------------------------------
+     ¿Para qué sirve esta página?
+     Es la vista de impresión y detalle fiscal de un pedido:
+     1. Lee el folio desde la URL (ej: comprobante.html?folio=FRG-48192).
+     2. Muestra los datos del cliente, método de pago, desglose del 13% de IVA
+        y la lista detallada de productos comprados.
+     3. Contiene estilos especiales de impresión (@media print) que ocultan
+        la cabecera, pie de página y botones de navegación al imprimir o guardar en PDF.
+     ========================================================== -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comprobante · Fragola Postres</title>
     <meta name="description" content="Comprobante de compra de Fragola Postres.">
+    <!-- Estilos base y estilos de aplicación -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
+    <!-- Tipografías web -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
 </head>
 
 <body class="pagina-comprobante">
 
+    <!-- Enlace de accesibilidad -->
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
+    <!-- ==========================================================
+         ENCABEZADO Y NAVEGACIÓN (Oculto automáticamente al imprimir)
+         ========================================================== -->
     <header class="cabecera">
         <nav class="nav-container contenedor" aria-label="Navegación principal">
             <a class="logo" href="index.html" aria-label="Fragola, inicio">
@@ -26,21 +45,30 @@
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
+            <!-- Inyección dinámica de sesión -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
+    <!-- ==========================================================
+         CONTENIDO PRINCIPAL: RECIBO DE COMPRA
+         ========================================================== -->
     <main id="contenido" class="pagina-comprobante">
         <div class="contenedor">
+            <!-- Barra de acciones: el botón de volver y el botón de imprimir (clase no-imprimir los oculta en PDF) -->
             <div class="comprobante__acciones no-imprimir">
                 <a class="boton-texto" href="pedidos.html">← Mis pedidos</a>
                 <button type="button" class="boton boton--secundario" id="boton-imprimir" disabled>Imprimir / Guardar PDF</button>
             </div>
-            <!-- JavaScript dibuja aquí el comprobante -->
+            
+            <!-- Zona dinámica: Aquí pagina-comprobante.js renderiza el recibo formal -->
             <div id="comprobante"></div>
         </div>
     </main>
 
+    <!-- ==========================================================
+         PIE DE PÁGINA (Footer Institucional - Oculto en impresión)
+         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -74,6 +102,7 @@
         </div>
     </footer>
 
+    <!-- Controlador JavaScript modular de comprobantes -->
     <script type="module" src="js/ui/pagina-comprobante.js"></script>
 </body>
 

@@ -1,39 +1,50 @@
 /* ==========================================================
+   HOJA DE ESTILOS BASE Y DISEÑO INSTITUCIONAL
+   Archivo: css/style.css
+   ----------------------------------------------------------
+   ¿Para qué sirve este archivo?
+   Es la identidad visual y estética de "Fragola Postres" (heredada
+   y ampliada del Desafío Práctico I). Define:
+   - Paleta de colores oficial de la marca (fucsia, rosas, dorados).
+   - Tipografías corporativas (DM Serif Display, IBM Plex Mono, Raleway).
+   - Estructura de layout compartida (contenedor, cabecera, navegación, pie de página).
+   - Estilos base de las páginas públicas (Inicio, Nosotros, Contacto).
    
-   INDICE
-
-   0. Base: variables, reset y etiquetas generales      - 19
-   1. Utilidades de layout (contenedor, sobretitulo)    - 98
-   2. Cabecera y navegacion                             - 116
-   3. Botones                                           - 183
-   4. Pie de pagina                                     - 233
-   5. index.html                                        - 287
-   6. catalogo.html                                     - 570
-   7. contacto.html                                     - 739
-   8. sobreNosotros.html                                - 879
-   9. breakpoints                                       - 958
-
+   ÍNDICE GENERAL:
+   0. Base: variables CSS, reset y etiquetas globales
+   1. Utilidades de layout (contenedor centrado, sobretítulos)
+   2. Cabecera y barra de navegación
+   3. Estilos de botones institucionales
+   4. Pie de página institucional (Footer)
+   5. Estilos de index.html (portada hero, favoritos, eventos)
+   6. Estilos de catalogo.html
+   7. Estilos de contacto.html
+   8. Estilos de sobreNosotros.html
+   9. Media Queries y Breakpoints responsivos
    ========================================================== */
 
-
 /* ==========================================================
-   0. BASE
+   0. BASE Y VARIABLES CORPORATIVAS DE MARCA
    ========================================================== */
 
 :root {
-    --fucsia: #d91661;
-    --rosa: #e99aaf;
-    --rosa-claro: #fff1f5;
-    --dorado: #bf9b38;
-    --blanco: #ffffff;
-    --texto: #503d43;
+    /* Colores corporativos de Fragola */
+    --fucsia: #d91661;          /* Color principal de la marca, enlaces y llamados a la acción */
+    --rosa: #e99aaf;            /* Tono suave para bordes y acentos secundarios */
+    --rosa-claro: #fff1f5;      /* Fondo cálido para secciones destacadas */
+    --dorado: #bf9b38;          /* Toque premium para detalles y precios */
+    --blanco: #ffffff;          /* Fondo base limpio */
+    --texto: #503d43;           /* Color chocolate/café de alta legibilidad para textos largos */
     --borde-claro: rgba(191, 155, 56, 0.45);
     --borde-suave: rgba(233, 154, 175, 0.5);
-    --serif: 'DM Serif Display', Georgia, serif;
-    --mono: 'IBM Plex Mono', monospace;
-    --fuente-menu: 'Raleway', Arial, sans-serif;
+
+    /* Tipografías institucionales */
+    --serif: 'DM Serif Display', Georgia, serif;    /* Tipografía con serifa para títulos editoriales */
+    --mono: 'IBM Plex Mono', monospace;              /* Tipografía monoespaciada para códigos y folios */
+    --fuente-menu: 'Raleway', Arial, sans-serif;    /* Tipografía sin serifa para menús y botones */
 }
 
+/* Reset universal: incluye el relleno y borde dentro del ancho total de la caja */
 * {
     box-sizing: border-box;
 }
