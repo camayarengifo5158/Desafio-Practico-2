@@ -1,16 +1,16 @@
 /* ==========================================================
-   REPOSITORIO DE USUARIOS (solo administración)
-   El rol de administrador solo lo puede otorgar otro
-   administrador: nadie se lo asigna a sí mismo al registrarse.
+   REPOSITORIO DE USUARIOS (Firestore - Colección "usuarios")
    ========================================================== */
 
-import { CLAVES, ROLES } from '../config/app-config.js';
-import { leer, escribir } from './almacenamiento.js';
+import { ROLES } from '../config/app-config.js';
+import { db, collection, getDocs, doc, getDoc, updateDoc } from '../config/firebase.js';
 import { requerirRol, usuarioPublico } from './auth.js';
 
 export async function obtenerUsuarios() {
     requerirRol(ROLES.ADMIN);
-    const usuarios = await leer(CLAVES.usuarios, []);
+    const snap = await getDocs(collection(db, 'usuarios'));
+    const usuarios = [];
+    snap.forEach((d) => usuarios.push({ id: d.id, ...d.data() }));
     return usuarios.map(usuarioPublico);
 }
 
@@ -19,11 +19,9 @@ export async function cambiarRol(id, rolNuevo) {
     if (!Object.values(ROLES).includes(rolNuevo)) throw new Error('Rol desconocido.');
     if (id === admin.id) throw new Error('No puedes cambiar tu propio rol.');
 
-    const usuarios = await leer(CLAVES.usuarios, []);
-    const indice = usuarios.findIndex((u) => u.id === id);
-    if (indice === -1) throw new Error('El usuario no existe.');
+    const docRef = doc(db, 'usuarios', id);
+    await updateDoc(docRef, { rol: rolNuevo });
+    const snap = await getDoc(docRef);
 
-    usuarios[indice] = { ...usuarios[indice], rol: rolNuevo };
-    await escribir(CLAVES.usuarios, usuarios);
-    return usuarioPublico(usuarios[indice]);
+    return usuarioPublico({ id, ...snap.data() });
 }

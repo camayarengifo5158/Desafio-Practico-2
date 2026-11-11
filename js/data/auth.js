@@ -1,19 +1,21 @@
 /* ==========================================================
-   AUTENTICACIÓN Y AUTORIZACIÓN
-   Registro, inicio y cierre de sesión con usuarios guardados
-   en localStorage. Las contraseñas se guardan como hash
-   SHA-256 con una "sal" aleatoria, nunca en texto plano.
-
-   requerirSesion() y requerirRol() son los "guardias" que usan
-   los repositorios antes de leer o modificar datos protegidos:
-   no basta con ocultar botones en la interfaz.
+   AUTENTICACIÓN Y AUTORIZACIÓN (Firebase Auth + Firestore)
    ========================================================== */
 
-import { CLAVES, ROLES } from '../config/app-config.js';
-import { leerSync, escribirSync, eliminarSync, simularRed, generarId } from './almacenamiento.js';
+import { ROLES, CLAVES } from '../config/app-config.js';
+import { 
+    auth, 
+    db, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged,
+    doc, 
+    getDoc, 
+    setDoc 
+} from '../config/firebase.js';
 import { validarRegistro } from '../logica/validaciones.js';
 
-// Error especial para distinguir problemas de permisos de otros errores
 export class ErrorAutorizacion extends Error {
     constructor(mensaje = 'No tienes permiso para realizar esta acción.') {
         super(mensaje);
@@ -21,41 +23,36 @@ export class ErrorAutorizacion extends Error {
     }
 }
 
-// ---------- Utilidades de contraseña ----------
+// Guarda la sesión en memoria y localStorage para compatibilidad síncrona inmediata en UI
+let usuarioActivo = JSON.parse(localStorage.getItem(CLAVES.sesion) || 'null');
 
-function generarSal() {
-    const bytes = new Uint8Array(4);
-    window.crypto.getRandomValues(bytes);
-    return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
-}
+// Mantiene sincronizada la sesión con Firebase en recargas de página
+onAuthStateChanged(auth, async (userFirebase) => {
+    if (userFirebase) {
+        try {
+            const docRef = doc(db, 'usuarios', userFirebase.uid);
+            const docSnap = await getDoc(docRef);
+            if (docSnap.exists()) {
+                usuarioActivo = { id: userFirebase.uid, ...docSnap.data() };
+                localStorage.setItem(CLAVES.sesion, JSON.stringify(usuarioActivo));
+            }
+        } catch (e) {
+            console.error('Error sincronizando usuario:', e);
+        }
+    } else {
+        usuarioActivo = null;
+        localStorage.removeItem(CLAVES.sesion);
+    }
+});
 
-// SHA-256(sal + ":" + contraseña) en hexadecimal. crypto.subtle es asíncrono.
-export async function calcularHash(sal, contrasena) {
-    const datos = new TextEncoder().encode(`${sal}:${contrasena}`);
-    const buffer = await window.crypto.subtle.digest('SHA-256', datos);
-    return Array.from(new Uint8Array(buffer), (b) => b.toString(16).padStart(2, '0')).join('');
-}
-
-// Quita sal y hash antes de entregar un usuario a la interfaz
 export function usuarioPublico(usuario) {
     if (!usuario) return null;
-    const { sal, hash, ...publico } = usuario;
+    const { hash, sal, ...publico } = usuario;
     return publico;
 }
 
-// ---------- Sesión ----------
-
 export function usuarioActual() {
-    const sesion = leerSync(CLAVES.sesion);
-    if (!sesion) return null;
-    const usuarios = leerSync(CLAVES.usuarios, []);
-    const usuario = usuarios.find((u) => u.id === sesion.usuarioId);
-    // Si el usuario fue eliminado o se restablecieron los datos, la sesión deja de ser válida
-    if (!usuario) {
-        eliminarSync(CLAVES.sesion);
-        return null;
-    }
-    return usuarioPublico(usuario);
+    return usuarioActivo ? usuarioPublico(usuarioActivo) : null;
 }
 
 export function esAdmin(usuario = usuarioActual()) {
@@ -78,11 +75,7 @@ export function requerirRol(rol) {
     return usuario;
 }
 
-function abrirSesion(usuario) {
-    escribirSync(CLAVES.sesion, { usuarioId: usuario.id, inicio: new Date().toISOString() });
-}
-
-// ---------- Operaciones públicas ----------
+// ---------- Operaciones Públicas ----------
 
 export async function registrar({ nombre, email, contrasena, confirmacion }) {
     const errores = validarRegistro({ nombre, email, contrasena, confirmacion });
@@ -92,50 +85,66 @@ export async function registrar({ nombre, email, contrasena, confirmacion }) {
         throw error;
     }
 
-    await simularRed();
-    const usuarios = leerSync(CLAVES.usuarios, []);
-    const emailNormalizado = email.trim().toLowerCase();
+    try {
+        const credencial = await createUserWithEmailAndPassword(auth, email.trim(), contrasena);
+        const uid = credencial.user.uid;
 
-    if (usuarios.some((u) => u.email === emailNormalizado)) {
-        const error = new Error('Ya existe una cuenta con ese correo.');
-        error.campos = { email: 'Este correo ya está registrado.' };
-        throw error;
+        const nuevoUsuario = {
+            id: uid,
+            nombre: nombre.trim(),
+            email: email.trim().toLowerCase(),
+            rol: ROLES.CLIENTE, // Registro siempre inicia con rol cliente
+            creadoEn: new Date().toISOString()
+        };
+
+        // Guardar documento del usuario en Firestore
+        await setDoc(doc(db, 'usuarios', uid), nuevoUsuario);
+
+        usuarioActivo = nuevoUsuario;
+        localStorage.setItem(CLAVES.sesion, JSON.stringify(nuevoUsuario));
+        return usuarioPublico(nuevoUsuario);
+
+    } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+            const err = new Error('Ya existe una cuenta con ese correo.');
+            err.campos = { email: 'Este correo ya está registrado.' };
+            throw err;
+        }
+        if (error.code === 'auth/weak-password') {
+            const err = new Error('La contraseña es demasiado débil.');
+            err.campos = { contrasena: 'Debe tener al menos 6 caracteres.' };
+            throw err;
+        }
+        throw new Error(error.message || 'Error al registrar el usuario.');
     }
-
-    const sal = generarSal();
-    const nuevo = {
-        id: generarId('usr'),
-        nombre: nombre.trim(),
-        email: emailNormalizado,
-        rol: ROLES.CLIENTE, // nadie puede elegir ser administrador al registrarse
-        sal,
-        hash: await calcularHash(sal, contrasena),
-        creadoEn: new Date().toISOString()
-    };
-
-    usuarios.push(nuevo);
-    escribirSync(CLAVES.usuarios, usuarios);
-    abrirSesion(nuevo);
-    return usuarioPublico(nuevo);
 }
 
 export async function iniciarSesion(email, contrasena) {
-    await simularRed();
-    const usuarios = leerSync(CLAVES.usuarios, []);
-    const usuario = usuarios.find((u) => u.email === String(email).trim().toLowerCase());
+    try {
+        const credencial = await signInWithEmailAndPassword(auth, String(email).trim(), contrasena);
+        const uid = credencial.user.uid;
 
-    // Mismo mensaje para correo o contraseña incorrectos: no revelamos qué cuentas existen
-    const credencialesInvalidas = new Error('Correo o contraseña incorrectos.');
-    if (!usuario) throw credencialesInvalidas;
+        const docRef = doc(db, 'usuarios', uid);
+        const docSnap = await getDoc(docRef);
 
-    const hash = await calcularHash(usuario.sal, contrasena);
-    if (hash !== usuario.hash) throw credencialesInvalidas;
+        if (!docSnap.exists()) {
+            throw new Error('Perfil de usuario no encontrado en la base de datos.');
+        }
 
-    abrirSesion(usuario);
-    return usuarioPublico(usuario);
+        usuarioActivo = { id: uid, ...docSnap.data() };
+        localStorage.setItem(CLAVES.sesion, JSON.stringify(usuarioActivo));
+        return usuarioPublico(usuarioActivo);
+
+    } catch (error) {
+        // Mensaje genérico de seguridad para no exponer cuentas existentes
+        throw new Error('Correo o contraseña incorrectos.');
+    }
 }
 
 export async function cerrarSesion() {
-    await simularRed();
-    eliminarSync(CLAVES.sesion);
+    await signOut(auth);
+    usuarioActivo = null;
+    localStorage.removeItem(CLAVES.sesion);
+    localStorage.removeItem(CLAVES.carrito);
+    document.dispatchEvent(new CustomEvent('carrito:cambio', { detail: [] }));
 }
