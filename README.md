@@ -1,6 +1,7 @@
 # Fragola Postres · Desafío Práctico II
 
-Aplicación web de pedidos en línea para **Fragola Postres**, construida sobre el sitio del Desafío Práctico I.
+Aplicación web de pedidos en línea para **Fragola Postres**, construida sobre el sitio del Desafío Práctico I con persistencia remota, autenticación de usuarios y autorización mediante reglas de seguridad en la nube.
+
 Desarrollo Web I · Ingeniería de Software y Negocios Digitales · ESEN 2026.
 
 **Integrantes**
@@ -9,132 +10,164 @@ Desarrollo Web I · Ingeniería de Software y Negocios Digitales · ESEN 2026.
 - Fernando Alonso Calvo Recinos — 20255526
 - Carlos Andrés Amaya Rengifo — 20255158
 
-**Versión publicada:** https://camayarengifo5158.github.io/Desafio-Practico-2/
+**Versión publicada en vivo:** https://camayarengifo5158.github.io/Desafio-Practico-2/
 
 ---
 
 ## Problema
 
-Fragola recibe sus encargos por WhatsApp e Instagram. No hay un catálogo que se pueda actualizar sin tocar el código, ni un registro ordenado de las ventas: los precios cambian a mano, los pedidos se pierden entre mensajes y no hay un comprobante para el cliente.
+Fragola gestionaba sus encargos de forma manual a través de WhatsApp e Instagram. No existía un catálogo dinámico administrable en línea, ni un registro centralizado y consistente de las ventas: los precios requerían cambios manuales en el código, los pedidos se extraviaban entre chats y el cliente no recibía un comprobante digital formal.
 
-La aplicación resuelve esto con dos procesos relacionados:
+La aplicación resuelve esta necesidad mediante dos procesos funcionales interconectados:
 
-1. **Gestión del catálogo** — la administración crea, modifica, oculta y elimina postres; el catálogo público se genera a partir de esos datos.
-2. **Compra y registro de transacciones** — el cliente arma un carrito con los postres del catálogo, simula el pago, recibe un comprobante y puede modificar o cancelar su pedido; la administración da seguimiento a cada venta y consulta indicadores.
+1. **Gestión del catálogo (Administración)** — La administración crea, actualiza, desactiva y elimina postres; el catálogo público se renderiza dinámicamente en el navegador a partir de los datos almacenados en la base de datos remota.
+2. **Compra, seguimiento y registro de transacciones (Clientes y Administración)** — El cliente explora el catálogo, arma su carrito, valida reglas de negocio (anticipación de 48 h, pedidos mínimos), simula el pago, recibe un comprobante imprimible con desglose de IVA y puede consultar, modificar o cancelar sus pedidos pendientes. La administración da seguimiento a cada venta, gestiona estados de entrega y consulta indicadores financieros en tiempo real.
 
-## Roles
+---
 
-| Rol | Qué puede hacer |
+## Roles y Permisos
+
+| Rol | Alcance y Permisos |
 |---|---|
-| **Visitante** | Ver y filtrar el catálogo, armar el carrito. Para pagar debe registrarse o ingresar. |
-| **Cliente** | Comprar, ver **solo sus** pedidos y comprobantes, modificar entrega/notas/cantidades y cancelar mientras el pedido esté *Pendiente*. |
-| **Administrador** | CRUD de postres, consultar todas las transacciones, cambiar estados, registrar pagos, editar y eliminar transacciones, ver indicadores y asignar roles. |
+| **Visitante** | Consulta y filtra el catálogo dinámico, agrega postres al carrito. Para formalizar la compra debe registrarse o iniciar sesión. |
+| **Cliente** | Compra en línea, consulta **únicamente sus propias transacciones** y comprobantes, modifica datos de entrega o notas y puede cancelar mientras el pedido esté en estado *Pendiente*. |
+| **Administrador** | CRUD completo del catálogo de postres, visualización de todas las transacciones de todos los clientes, cambio de estados operativos, registro de cobros, edición y eliminación de pedidos, panel de indicadores de negocio (KPIs) y administración de roles de usuario. |
 
-Toda cuenta nueva se registra como **cliente**. Solo un administrador puede otorgar el rol de administrador, y no puede cambiar su propio rol.
+*Toda cuenta nueva creada desde la interfaz se registra obligatoriamente con el rol de **cliente**. El rol de administrador únicamente puede ser concedido por otro administrador desde el panel seguro, y las reglas en la nube prohíben la auto-asignación de privilegios.*
 
-## Funcionalidades
+---
 
-**Catálogo (`catalogo.html`)**
-- Tarjetas generadas con JavaScript a partir de los datos guardados.
-- Búsqueda sin distinguir tildes, filtro por categoría y disponibilidad, orden por nombre o precio, agrupación por categoría.
-- Carrito lateral: agregar, cambiar cantidad, quitar y vaciar.
-- Regla de negocio: cantidades mínimas por producto (p. ej. Key Lime Pie mínimo 12 unidades).
+## Funcionalidades Principales
 
-**Compra simulada y comprobante**
-- Entrega en sucursal o a domicilio (+$3.50), con fecha mínima de 48 h de anticipación.
-- Pago simulado: tarjeta, transferencia o efectivo contra entrega. No se piden ni se guardan datos de tarjetas.
-- Los precios se vuelven a leer del catálogo al confirmar; el total no depende de lo que haya en el carrito del navegador.
-- Comprobante (`comprobante.html?folio=FRG-00010`) con folio, detalle, envío, total, IVA incluido e impresión o PDF.
+### Catálogo y Carrito (`catalogo.html`)
+- **Renderizado dinámico:** Tarjetas generadas con JavaScript a partir de la colección remota de Firestore.
+- **Herramientas de búsqueda y filtrado:** Búsqueda normalizada sin distinguir acentos ni mayúsculas, filtro por categoría y por disponibilidad en inventario, ordenamiento múltiple (nombre, precio ascendente/descendente, actualización reciente) y agrupación visual por categorías.
+- **Carrito de compras interactivo:** Panel lateral con controles de cantidad, eliminación de líneas, vaciado completo y validación de reglas de negocio en tiempo real.
+- **Reglas del negocio:** Cantidades mínimas de compra por postre (ej. *Key Lime Pie* exige un mínimo de 12 unidades).
 
-**Mis pedidos (`pedidos.html`)**
-- Historial del usuario con filtro por estado y orden.
-- Modificar o cancelar pedidos pendientes.
+### Compra Simulada y Comprobante Digital (`comprobante.html`)
+- **Modal de checkout accesible:** Opciones de entrega en sucursal o a domicilio (+$3.50), con validación obligatoria de **48 horas de anticipación**.
+- **Pago simulado:** Tarjeta, transferencia bancaria o efectivo contra entrega (no se solicitan ni almacenan datos sensibles de tarjetas).
+- **Consistencia de precios:** Los precios unitarios y la disponibilidad se validan directamente con los registros del catálogo al momento de generar la compra.
+- **Comprobante imprimible:** Vista con folio único (`FRG-XXXXX`), detalle desglosado de productos, costos de envío, base imponible e IVA (13 %) incluido, preparado para impresión o exportación a PDF vía CSS `@media print`.
 
-**Panel de administración (`admin.html`)**
-- *Resumen:* ventas, ticket promedio, pedidos activos, monto por cobrar, ventas por categoría, postres más vendidos, pedidos por estado y próximas entregas.
-- *Postres:* CRUD completo con presentaciones y precios dinámicos, imagen con vista previa y switch de disponibilidad.
-- *Transacciones:* búsqueda por folio, cliente o correo; filtro por estado y rango de fechas; cambio rápido de estado; edición; eliminación; acceso al comprobante.
-- *Usuarios:* listado con pedidos y monto comprado; cambio de rol.
-- *Restablecer datos de prueba.*
+### Historial del Cliente (`pedidos.html`)
+- Historial personalizado del usuario autenticado con filtros por estado y ordenamiento.
+- Acceso directo al comprobante de cada compra.
+- Modificación de notas/entrega y cancelación inmediata de pedidos en estado *Pendiente*.
 
-Estados de un pedido: `Pendiente → En preparación → Lista para entrega → Entregada`. Cualquier estado no final puede pasar a `Cancelada`.
+### Panel de Administración (`admin.html`)
+- **Resumen e Indicadores (KPIs):** Ventas totales (excluyendo cancelados), ticket promedio, pedidos activos en cocina, saldo por cobrar, distribución de ventas por categoría con barras proporcionales, top 5 de postres más vendidos y listado de entregas próximas.
+- **Postres (CRUD):** Creación, edición y eliminación de postres, selector de presentaciones y precios dinámicos, vista previa de imágenes y activación/desactivación instantánea de disponibilidad.
+- **Transacciones:** Búsqueda por folio, nombre de cliente o correo; filtro por estado y rangos de fecha; avance controlado de estados; edición y eliminación administrativa.
+- **Usuarios:** Listado de usuarios registrados con total de pedidos y monto acumulado; cambio controlado de roles.
+- **Restablecer datos de prueba:** Botón seguro que restaura el catálogo de 22 postres y transacciones iniciales en Cloud Firestore.
 
-## Tecnología
+---
 
-- HTML5, CSS3 propio (sin frameworks) y JavaScript nativo con **módulos ES**.
-- **Persistencia en `localStorage`** detrás de una capa de datos asíncrona (`async/await`) con latencia simulada, siguiendo la recomendación del profesor.
-- Contraseñas guardadas como hash **SHA-256 con sal** (Web Crypto API).
-- Publicado en **GitHub Pages**.
+## Tecnología y Arquitectura
 
-## Estructura
+- **Frontend:** HTML5 semántico (`<dialog>`, `<nav>`, `<main>`, `<section>`, `<aside>`), CSS3 nativo puro con variables de diseño (sin frameworks de interfaz basados en JS) y JavaScript nativo estructurado mediante **módulos ES**.
+- **Autenticación:** **Firebase Authentication** (Email / Contraseña) mediante el SDK Modular Web v10.12.0.
+- **Persistencia Remota:** **Google Cloud Firestore** (colecciones `postres`, `transacciones`, `usuarios`).
+- **Seguridad y Autorización en Servidor:** Reglas de seguridad declarativas en **`firestore.rules`** desplegadas en Cloud Firestore mediante Firebase CLI.
+- **Despliegue y Hosting:** Publicado de forma estática en **GitHub Pages**.
+
+---
+
+## Estructura Modular del Proyecto
 
 ```
-├── index.html, sobreNosotros.html, contacto.html   Páginas del Desafío I
-├── catalogo.html        Catálogo dinámico, carrito y compra
-├── ingresar.html        Inicio de sesión y registro
-├── pedidos.html         Historial del cliente
-├── comprobante.html     Comprobante de compra
-├── admin.html           Panel de administración
+├── .firebaserc              Enlace al proyecto de Google Cloud (fragola-postres)
+├── firebase.json            Configuración de despliegue de Firestore
+├── firestore.rules          Reglas de seguridad y control de acceso en la nube
+├── index.html               Página de inicio
+├── catalogo.html            Catálogo dinámico, carrito y proceso de compra
+├── ingresar.html            Inicio de sesión y registro de cuentas
+├── pedidos.html             Historial de compras del cliente
+├── comprobante.html         Comprobante de compra imprimible
+├── admin.html               Panel de control y métricas administrativas
+├── sobreNosotros.html       Página institucional
+├── contacto.html            Página de contacto
 ├── css/
-│   ├── style.css        Estilos del Desafío I
-│   └── app.css          Componentes nuevos (carrito, diálogos, tablas, panel…)
-├── img/                 Imágenes optimizadas (JPG ~100 KB)
+│   ├── style.css            Estilos base y tipografías
+│   └── app.css              Estilos de componentes, diálogo, tablas responsivas y panel
+├── img/                     Recursos gráficos y fotografías de postres optimizadas
 └── js/
     ├── config/
-    │   └── app-config.js          Claves de almacenamiento, roles, estados y reglas del negocio
-    ├── data/                      Gestión de datos (lo único que toca localStorage)
-    │   ├── almacenamiento.js      Lectura/escritura asíncrona y latencia simulada
-    │   ├── semilla.js             Datos iniciales
-    │   ├── auth.js                Registro, sesión, hash y guardias de rol
-    │   ├── postres-repo.js        CRUD de postres
-    │   ├── transacciones-repo.js  Compra, consulta, modificación, cancelación y eliminación
-    │   └── usuarios-repo.js       Usuarios y roles
-    ├── logica/                    Funciones puras, sin DOM
-    │   ├── procesamiento.js       Búsqueda, filtros, orden, agrupación e indicadores
-    │   ├── validaciones.js        Reglas de formularios y del negocio
-    │   ├── carrito.js             Carrito del navegador
-    │   └── formato.js             Dinero, fechas y escape de HTML
-    └── ui/                        Comportamiento de la interfaz
-        ├── comun.js               Control de acceso, cabecera, toasts, carga, confirmaciones
-        ├── plantillas.js          Fragmentos HTML reutilizables
-        ├── dialogo-transaccion.js Formulario para modificar un pedido
-        ├── pagina-*.js            Un módulo por página
-        └── admin-*.js             Una sección del panel por módulo
+    │   ├── app-config.js    Constantes globales, categorías, roles, estados y negocio
+    │   └── firebase.js      Inicialización del SDK Modular de Firebase (Auth y Firestore)
+    ├── data/                Capa de acceso y mutación de datos remotos
+    │   ├── auth.js          Registro, sesión, guardias de rol y estado de autenticación
+    │   ├── postres-repo.js  CRUD remoto del catálogo en Firestore
+    │   ├── transacciones-repo.js Registro, consulta por cliente/folio y actualización de compras
+    │   ├── usuarios-repo.js Consulta y asignación de roles de usuario
+    │   └── semilla.js       Catálogo inicial y transacciones representativas de prueba
+    ├── logica/              Funciones puras sin dependencia del DOM
+    │   ├── procesamiento.js Búsqueda normalizada, filtros, ordenación y cálculo de KPIs
+    │   ├── validaciones.js  Reglas de formularios, 48h de anticipación y validaciones
+    │   ├── carrito.js       Gestión de estado del carrito en el navegador
+    │   └── formato.js       Formateo monetario, fechas y escape preventivo de HTML
+    └── ui/                  Controladores de interfaz y manipulación del DOM
+        ├── comun.js         Guardias de acceso, cabecera de sesión, toasts, carga y modal
+        ├── plantillas.js    Fragmentos HTML reutilizables
+        ├── dialogo-transaccion.js Modal para modificación de pedidos
+        ├── pagina-*.js      Controladores específicos por página
+        └── admin-*.js       Módulos individuales para cada pestaña del panel admin
 ```
 
-La dependencia va en un solo sentido: `ui → logica / data → config`. Las páginas nunca leen `localStorage` directamente.
+La arquitectura aplica separación estricta de responsabilidades: los controladores de interfaz (`ui/`) delegan la lógica a funciones puras (`logica/`) y las operaciones asíncronas a los repositorios de datos (`data/`), interactuando con Firestore de manera desacoplada.
 
-## Seguridad y autorización
+---
 
-- Las operaciones protegidas verifican el rol **en la capa de datos** (`requerirSesion()` / `requerirRol()`), no solo ocultando botones. Por ejemplo, si un cliente llama `eliminarPostre()` desde la consola, recibe `ErrorAutorizacion`.
-- Un cliente solo obtiene sus propias transacciones; pedir el folio de otra persona devuelve un error de permiso.
-- El registro siempre asigna el rol `cliente`.
-- Las contraseñas no se guardan en texto plano ni aparecen en el repositorio.
-- Todo texto ingresado por usuarios se escapa antes de insertarse en el DOM.
+## Seguridad y Control de Autorización
 
-**Limitación conocida:** `localStorage` vive en el navegador de cada usuario, así que los datos no se comparten entre dispositivos y alguien con conocimientos técnicos podría editarlos desde las herramientas del navegador. Los controles anteriores demuestran la lógica de autorización; la protección real exige reglas en un servidor (Firebase Security Rules o RLS de Supabase). Como la capa `data/` ya es asíncrona, migrar implica reemplazar `almacenamiento.js` y los repositorios sin cambiar las páginas.
+1. **Autorización Perimetral en Cloud Firestore (`firestore.rules`):**
+   - **Colección `postres`:** Lectura pública para cualquier visitante; creación, actualización y eliminación restringidas exclusivamente al rol `admin` verificado en su documento de usuario (`esAdmin()`).
+   - **Colección `usuarios`:** Creación permitida únicamente con rol `cliente` para evitar auto-promoción administrativa; actualización de roles restringida exclusivamente a administradores.
+   - **Colección `transacciones`:** Los clientes únicamente pueden consultar (`read`) y modificar (`update`) transacciones cuyo campo `clienteId` coincida exactamente con su `request.auth.uid`. Las consultas del cliente se acotan estáticamente para cumplir con el principio *rules are not filters*.
+   - **Eliminación de transacciones:** Operación exclusiva de administradores.
+2. **Protección en el Cliente:**
+   - Todo dato ingresado por el usuario se escapa antes de insertarse en el DOM (`escaparHTML`) para prevenir inyecciones XSS.
+   - Las sesiones se cierran de forma segura limpiando tanto la sesión de Firebase como el caché local y el carrito del navegador.
 
-## Cómo probar
+---
 
-**En línea:** abrir la URL publicada.
+## Instrucciones para Pruebas y Evaluación
 
-**Localmente:** los módulos ES no funcionan abriendo el archivo con doble clic (`file://`). Hay que usar un servidor local:
+### Despliegue en Línea
+Acceder directamente a la URL pública:  
+**https://camayarengifo5158.github.io/Desafio-Practico-2/**
 
-- VS Code → extensión *Live Server* → clic derecho en `index.html` → *Open with Live Server*, o
-- En la carpeta del proyecto: `python -m http.server 8000` y abrir `http://localhost:8000`.
+### Ejecución Local
+Dado que el proyecto utiliza módulos ES nativos (`type="module"`), debe servirse mediante un servidor HTTP local:
+- **VS Code:** Clic derecho en `index.html` $\rightarrow$ *Open with Live Server*, o
+- **Terminal:** Ejecutar `python3 -m http.server 8000` en la carpeta raíz y abrir `http://localhost:8000`.
 
-**Credenciales de prueba:** se entregan por Moodle (un administrador y dos clientes). También se puede crear una cuenta de cliente nueva desde *Ingresar → Crear cuenta*.
+### Credenciales de Prueba (Entregadas vía Moodle)
+- **Administrador:** `admin@fragola.com`
+- **Cliente:** `gabrielmendez@gmail.com`
+- *(Opcional)*: Es posible crear una cuenta nueva de cliente en cualquier momento desde **Ingresar $\rightarrow$ Crear cuenta**.
 
-**Recorrido sugerido**
+### Recorrido de Evaluación Sugerido
 
-1. Como visitante, filtrar el catálogo y agregar postres al carrito (probar Key Lime Pie con menos de 12 unidades).
-2. *Finalizar compra* → crear cuenta → elegir entrega a domicilio y pagar → revisar el comprobante.
-3. En *Mis pedidos*, modificar cantidades y luego cancelar el pedido.
-4. Cerrar sesión, ingresar como administrador y revisar el *Resumen*.
-5. En *Postres*, crear uno nuevo, editarlo, desactivarlo y verificar el cambio en el catálogo.
-6. En *Transacciones*, avanzar estados, registrar un pago, editar y eliminar.
-7. Si los datos quedan desordenados: *Resumen → Restablecer datos*.
-
-## Datos iniciales
-
-22 postres del catálogo original en 4 categorías (uno marcado como no disponible), 3 usuarios (1 administrador, 2 clientes) y 9 transacciones en distintos estados, métodos de pago y tipos de entrega, suficientes para ver todos los indicadores y filtros.
+1. **Flujo de Visitante y Catálogo:**
+   - Explorar `catalogo.html`, utilizar el buscador en tiempo real, filtrar por categoría y marcar "Solo disponibles".
+   - Agregar productos al carrito (probar agregar menos de 12 unidades de *Key Lime Pie* para verificar la regla de negocio).
+2. **Flujo de Compra y Comprobante (Cliente):**
+   - Abrir el carrito y presionar *Finalizar compra*.
+   - Iniciar sesión con la cuenta de cliente de prueba (`gabrielmendez@gmail.com`).
+   - Completar el formulario de entrega y pago $\rightarrow$ confirmar el pedido.
+   - Verificar la redirección automática a `comprobante.html?folio=FRG-XXXXX`, revisar el desglose y probar la opción de impresión o PDF.
+3. **Gestión de Pedidos del Cliente:**
+   - Ir a `pedidos.html` desde el menú de usuario.
+   - Modificar las notas o dirección de un pedido en estado *Pendiente*.
+   - Probar la cancelación de un pedido pendiente con su confirmación modal.
+4. **Flujo de Administración (`admin.html`):**
+   - Cerrar sesión e ingresar con `admin@fragola.com`.
+   - Acceder al menú *Panel de administración*.
+   - **Pestaña Resumen:** Verificar los KPIs financieros calculados en tiempo real (ventas totales, ticket promedio, ventas por categoría y postres más vendidos).
+   - **Pestaña Postres:** Crear un postre nuevo, editar uno existente, cambiar su disponibilidad con el switch y verificar que los cambios se reflejan inmediatamente en el catálogo público.
+   - **Pestaña Transacciones:** Filtrar por folio, estado o fechas; avanzar el estado de un pedido (ej. *En preparación* $\rightarrow$ *Lista para entrega*) y probar la eliminación.
+   - **Pestaña Usuarios:** Visualizar la lista de clientes registrados con su historial de compras y probar la asignación de roles.
+   - **Restablecer datos:** Presionar el botón en el panel de resumen para restablecer el catálogo de 22 postres y transacciones iniciales en Cloud Firestore.

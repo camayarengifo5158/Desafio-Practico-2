@@ -7,8 +7,7 @@
    ========================================================== */
 
 import { iniciarPagina, confirmar, conCarga, avisarAlLlegar } from './comun.js';
-import { restablecerDatos } from '../data/semilla.js';
-import { simularRed } from '../data/almacenamiento.js';
+import { restablecerDatosFirestore } from '../data/semilla.js';
 import * as resumen from './admin-resumen.js';
 import * as postres from './admin-postres.js';
 import * as transacciones from './admin-transacciones.js';
@@ -44,15 +43,14 @@ pestanas.forEach((tab, i) => {
 
 document.querySelector('#boton-restablecer').addEventListener('click', async (e) => {
     const boton = e.currentTarget; // se guarda antes del await (después currentTarget es null)
-    const ok = await confirmar('Se perderán los postres, usuarios y transacciones creados durante las pruebas.', {
+    const ok = await confirmar('Se restaurará el catálogo de 22 postres y las transacciones de prueba en Cloud Firestore.', {
         titulo: 'Restablecer datos de prueba', textoAceptar: 'Restablecer', peligro: true
     });
     if (!ok) return;
     await conCarga(boton, 'Restableciendo…', async () => {
-        await simularRed();
-        restablecerDatos();
+        await restablecerDatosFirestore();
     });
-    avisarAlLlegar('Datos de prueba restablecidos.');
+    avisarAlLlegar('Datos de prueba restablecidos en Firebase.');
     location.reload();
 });
 

@@ -6,7 +6,6 @@
    y errores por campo en formularios.
    ========================================================== */
 
-import { asegurarDatosIniciales } from '../data/semilla.js';
 import { usuarioActual, cerrarSesion, ErrorAutorizacion } from '../data/auth.js';
 import { contarUnidades, alCambiarCarrito } from '../logica/carrito.js';
 import { escaparHTML } from '../logica/formato.js';
@@ -15,7 +14,6 @@ import { ROLES } from '../config/app-config.js';
 // ---------- Inicio de página y control de acceso ----------
 // requiere: null (pública), 'sesion' (cualquier usuario) o 'admin'
 export function iniciarPagina({ requiere = null } = {}) {
-    asegurarDatosIniciales();
     const usuario = usuarioActual();
 
     if (requiere && !usuario) {

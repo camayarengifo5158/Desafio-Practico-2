@@ -11,6 +11,7 @@
 
 import { CLAVES, VERSION_DATOS, NEGOCIO, ROLES } from '../config/app-config.js';
 import { leerSync, escribirSync } from './almacenamiento.js';
+import { db, doc, setDoc } from '../config/firebase.js'; // <-- AGREGAR ESTA LÍNEA AQUÍ
 
 const FECHA_BASE = '2026-09-01T10:00:00.000Z';
 
@@ -177,9 +178,16 @@ function transaccion(numero, usuario, fecha, items, opciones) {
 }
 
 function crearTransaccionesIniciales() {
-    const [, maria, jose] = USUARIOS_INICIALES;
+    const gabriel = {
+        id: 'wnDdcH4P2aW7hhUy9BSHDeGlt0R2',
+        nombre: 'Gabriel Méndez',
+        email: 'gabrielmendez@gmail.com'
+    };
+    const maria = { id: 'usr_maria', nombre: 'María López', email: 'maria@correo.com' };
+    const jose = { id: 'usr_jose', nombre: 'José Martínez', email: 'jose@correo.com' };
+
     return [
-        transaccion(1, maria, '2026-10-02T15:20:00.000Z',
+        transaccion(1, gabriel, '2026-10-02T15:20:00.000Z',
             [linea('pst_keto_lemon', 1, 1), linea('pst_brownies', 0, 6)],
             { metodoPago: 'tarjeta', estado: 'entregada', entrega: { tipo: 'retiro', sucursal: 'La Mascota', fecha: '2026-10-04', direccion: '' }, notas: 'Cumpleaños de mamá' }),
         transaccion(2, jose, '2026-10-05T18:05:00.000Z',
@@ -188,19 +196,19 @@ function crearTransaccionesIniciales() {
         transaccion(3, maria, '2026-10-09T14:40:00.000Z',
             [linea('pst_lotus', 1, 2), linea('pst_oreo', 1, 1)],
             { metodoPago: 'efectivo', estado: 'entregada', entrega: { tipo: 'retiro', sucursal: 'Epic Plaza', fecha: '2026-10-11', direccion: '' } }),
-        transaccion(4, jose, '2026-10-13T16:10:00.000Z',
+        transaccion(4, gabriel, '2026-10-13T16:10:00.000Z',
             [linea('pst_pavlova_lemon', 0, 1)],
             { metodoPago: 'tarjeta', estado: 'cancelada', entrega: { tipo: 'retiro', sucursal: 'La Mascota', fecha: '2026-10-15', direccion: '' }, notas: 'Cliente canceló por cambio de fecha' }),
         transaccion(5, maria, '2026-10-16T19:30:00.000Z',
             [linea('pst_paleo_choco', 1, 1), linea('pst_alfajor', 0, 12)],
             { metodoPago: 'tarjeta', estado: 'entregada', entrega: { tipo: 'domicilio', sucursal: 'La Mascota', fecha: '2026-10-18', direccion: 'Res. Los Héroes, pasaje 3 #12, San Salvador' } }),
-        transaccion(6, jose, '2026-10-20T13:15:00.000Z',
+        transaccion(6, gabriel, '2026-10-20T13:15:00.000Z',
             [linea('pst_key_lime', 0, 24), linea('pst_mini_pavlovas', 1, 30)],
             { metodoPago: 'transferencia', estado: 'lista', entrega: { tipo: 'domicilio', sucursal: 'Epic Plaza', fecha: '2026-10-29', direccion: 'Torre Futura, nivel 9, San Salvador' }, notas: 'Evento corporativo' }),
-        transaccion(7, maria, '2026-10-23T17:45:00.000Z',
+        transaccion(7, jose, '2026-10-23T17:45:00.000Z',
             [linea('pst_cupcakes', 0, 1), linea('pst_espumillas', 0, 4)],
             { metodoPago: 'tarjeta', estado: 'en_preparacion', entrega: { tipo: 'retiro', sucursal: 'La Mascota', fecha: '2026-10-30', direccion: '' } }),
-        transaccion(8, jose, '2026-10-25T20:00:00.000Z',
+        transaccion(8, gabriel, '2026-10-25T20:00:00.000Z',
             [linea('pst_tiramisu', 0, 4), linea('pst_dubai', 0, 6)],
             { metodoPago: 'efectivo', estado: 'pendiente', entrega: { tipo: 'retiro', sucursal: 'Epic Plaza', fecha: '2026-11-02', direccion: '' } }),
         transaccion(9, maria, '2026-10-26T15:00:00.000Z',
@@ -211,20 +219,42 @@ function crearTransaccionesIniciales() {
 
 // Carga la semilla si es la primera vez o si cambió la versión de los datos
 export function asegurarDatosIniciales() {
-    const version = leerSync(CLAVES.version);
-    if (version === VERSION_DATOS) {
-        return false;
-    }
-    restablecerDatos();
     return true;
 }
 
 export function restablecerDatos() {
-    const transacciones = crearTransaccionesIniciales();
-    escribirSync(CLAVES.postres, POSTRES_INICIALES);
-    escribirSync(CLAVES.usuarios, USUARIOS_INICIALES);
-    escribirSync(CLAVES.transacciones, transacciones);
-    escribirSync(CLAVES.contadorFolio, transacciones.length);
-    escribirSync(CLAVES.carrito, []);
-    escribirSync(CLAVES.version, VERSION_DATOS);
+    return restablecerDatosFirestore();
 }
+
+// Cargar catálogo de 22 postres directamente en Cloud Firestore
+export async function cargarSemillaFirebase() {
+    console.log('Iniciando subida del catálogo a Cloud Firestore...');
+    for (const p of POSTRES_INICIALES) {
+        const { id, ...datos } = p;
+        await setDoc(doc(db, 'postres', id), datos);
+        console.log(`✓ Postre subido: ${datos.nombre}`);
+    }
+    console.log('Catálogo cargado con éxito en Firebase.');
+}
+
+// Restablecer catálogo y transacciones de prueba en Cloud Firestore
+export async function restablecerDatosFirestore() {
+    console.log('Restableciendo catálogo y transacciones en Cloud Firestore...');
+    for (const p of POSTRES_INICIALES) {
+        const { id, ...datos } = p;
+        await setDoc(doc(db, 'postres', id), datos);
+    }
+
+    const transacciones = crearTransaccionesIniciales();
+    for (const t of transacciones) {
+        const { id, ...datos } = t;
+        await setDoc(doc(db, 'transacciones', id), datos);
+    }
+
+    localStorage.removeItem(CLAVES.carrito);
+    document.dispatchEvent(new CustomEvent('carrito:cambio', { detail: [] }));
+    console.log('Catálogo y transacciones cargados con éxito en Firebase.');
+}
+
+window.cargarSemillaFirebase = cargarSemillaFirebase;
+window.restablecerDatosFirestore = restablecerDatosFirestore;
