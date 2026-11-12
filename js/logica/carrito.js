@@ -2,16 +2,16 @@
    GESTOR DEL CARRITO DE COMPRAS (Lógica de Negocio)
 
    ÍNDICE:
-   - EVENTO
-   - guardar()
-   - export alCambiarCarrito()
-   - export obtenerCarrito()
-   - export contarUnidades()
-   - export agregarAlCarrito()
-   - export actualizarCantidad()
-   - export quitarDelCarrito()
-   - export vaciarCarrito()
-   - export detallarCarrito()
+   - EVENTO  (línea 25)
+   - guardar()  (línea 27)
+   - export alCambiarCarrito()  (línea 33)
+   - export obtenerCarrito()  (línea 37)
+   - export contarUnidades()  (línea 41)
+   - export agregarAlCarrito()  (línea 45)
+   - export actualizarCantidad()  (línea 68)
+   - export quitarDelCarrito()  (línea 78)
+   - export vaciarCarrito()  (línea 82)
+   - export detallarCarrito()  (línea 86)
 */
 
 import { CLAVES } from '../config/app-config.js';

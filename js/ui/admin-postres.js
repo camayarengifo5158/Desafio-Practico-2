@@ -2,22 +2,22 @@
    SUBMÓDULO: CRUD DE POSTRES (Capa UI / Admin)
 
    ÍNDICE:
-   - tabla
-   - filtros
-   - resumen
-   - dialogo
-   - form
-   - listaVariantes
-   - vistaPrevia
-   - postres
-   - editandoId
-   - export cargar()
-   - pintar()
-   - filaVariante()
-   - leerFormulario()
-   - actualizarVistaPrevia()
-   - abrirFormulario()
-   - export iniciar()
+   - tabla  (línea 40)
+   - filtros  (línea 41)
+   - resumen  (línea 42)
+   - dialogo  (línea 43)
+   - form  (línea 44)
+   - listaVariantes  (línea 45)
+   - vistaPrevia  (línea 46)
+   - postres  (línea 48)
+   - editandoId  (línea 49)
+   - export cargar()  (línea 51)
+   - pintar()  (línea 61)
+   - filaVariante()  (línea 120)
+   - leerFormulario()  (línea 137)
+   - actualizarVistaPrevia()  (línea 153)
+   - abrirFormulario()  (línea 157)
+   - export iniciar()  (línea 183)
 */
 
 import { CATEGORIAS, IMAGENES_DISPONIBLES, IMAGEN_POR_DEFECTO } from '../config/app-config.js';

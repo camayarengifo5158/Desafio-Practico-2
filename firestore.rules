@@ -2,11 +2,11 @@
 // REGLAS DE SEGURIDAD DE CLOUD FIRESTORE
 //
 // ÍNDICE:
-//   - match /databases/{database}/documents
-//   - function esAdmin
-//   - match /postres/{postreId}
-//   - match /usuarios/{userId}
-//   - match /transacciones/{transaccionId}
+//   - match /databases/{database}/documents  (línea 13)
+//   - function esAdmin  (línea 15)
+//   - match /postres/{postreId}  (línea 20)
+//   - match /usuarios/{userId}  (línea 27)
+//   - match /transacciones/{transaccionId}  (línea 41)
 
 rules_version = '2';
 service cloud.firestore {

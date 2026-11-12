@@ -2,13 +2,13 @@
    PÁGINA: AUTENTICACIÓN (Ingreso y Registro de Usuarios)
 
    ÍNDICE:
-   - formLogin
-   - formRegistro
-   - aviso
-   - destinoDespuesDeIngresar()
-   - yaIngresado
-   - pestanas
-   - activarPestana()
+   - formLogin  (línea 27)
+   - formRegistro  (línea 28)
+   - aviso  (línea 29)
+   - destinoDespuesDeIngresar()  (línea 31)
+   - yaIngresado  (línea 37)
+   - pestanas  (línea 47)
+   - activarPestana()  (línea 49)
 */
 
 import { iniciarSesion, registrar, usuarioActual } from '../data/auth.js';

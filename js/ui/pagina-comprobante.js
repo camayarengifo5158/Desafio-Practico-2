@@ -2,11 +2,11 @@
    PÁGINA: COMPROBANTE OFICIAL DE COMPRA (Capa UI)
 
    ÍNDICE:
-   - usuario
-   - contenedor
-   - botonImprimir
-   - pintarComprobante()
-   - cargar()
+   - usuario  (línea 22)
+   - contenedor  (línea 23)
+   - botonImprimir  (línea 24)
+   - pintarComprobante()  (línea 31)
+   - cargar()  (línea 121)
 */
 
 import { obtenerTransaccion } from '../data/transacciones-repo.js';

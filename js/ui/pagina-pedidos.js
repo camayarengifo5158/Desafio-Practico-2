@@ -2,14 +2,14 @@
    PÁGINA: MIS PEDIDOS (Historial de Compras del Cliente)
 
    ÍNDICE:
-   - usuario
-   - lista
-   - filtroEstado
-   - orden
-   - resumen
-   - pedidos
-   - cargar()
-   - pintar()
+   - usuario  (línea 32)
+   - lista  (línea 34)
+   - filtroEstado  (línea 35)
+   - orden  (línea 36)
+   - resumen  (línea 37)
+   - pedidos  (línea 39)
+   - cargar()  (línea 45)
+   - pintar()  (línea 55)
 */
 
 import { ESTADOS } from '../config/app-config.js';

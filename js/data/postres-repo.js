@@ -2,14 +2,14 @@
    REPOSITORIO DE POSTRES (Capa de Datos / Persistencia)
 
    ÍNDICE:
-   - normalizarPostre()
-   - errorDeValidacion()
-   - export obtenerPostres()
-   - export obtenerPostre()
-   - export crearPostre()
-   - export actualizarPostre()
-   - export cambiarDisponibilidad()
-   - export eliminarPostre()
+   - normalizarPostre()  (línea 34)
+   - errorDeValidacion()  (línea 49)
+   - export obtenerPostres()  (línea 55)
+   - export obtenerPostre()  (línea 64)
+   - export crearPostre()  (línea 73)
+   - export actualizarPostre()  (línea 96)
+   - export cambiarDisponibilidad()  (línea 119)
+   - export eliminarPostre()  (línea 126)
 */
 
 import { ROLES } from '../config/app-config.js';

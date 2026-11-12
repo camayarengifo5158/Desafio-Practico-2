@@ -2,10 +2,10 @@
    ¿Para qué sirve este archivo en la vida real de la aplicación?
 
    ÍNDICE:
-   - firebaseConfig
-   - export app
-   - export auth
-   - export db
+   - firebaseConfig  (línea 36)
+   - export app  (línea 46)
+   - export auth  (línea 48)
+   - export db  (línea 50)
 */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";

@@ -2,13 +2,13 @@
    ALMACENAMIENTO LOCAL (Capa de Acceso a localStorage)
 
    ÍNDICE:
-   - export simularRed()
-   - export leerSync()
-   - export escribirSync()
-   - export eliminarSync()
-   - export leer()
-   - export escribir()
-   - export generarId()
+   - export simularRed()  (línea 16)
+   - export leerSync()  (línea 22)
+   - export escribirSync()  (línea 32)
+   - export eliminarSync()  (línea 43)
+   - export leer()  (línea 47)
+   - export escribir()  (línea 52)
+   - export generarId()  (línea 58)
 */
 
 import { LATENCIA_MS } from '../config/app-config.js';

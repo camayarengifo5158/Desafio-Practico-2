@@ -2,14 +2,14 @@
    PLANTILLAS Y COMPONENTES VISUALES HTML (Capa UI)
 
    ÍNDICE:
-   - export insigniaEstado()
-   - export insigniaPago()
-   - export nombreCategoria()
-   - export textoMetodoPago()
-   - export textoEntrega()
-   - export opciones()
-   - export textoPrecios()
-   - export imagenPostre()
+   - export insigniaEstado()  (línea 19)
+   - export insigniaPago()  (línea 24)
+   - export nombreCategoria()  (línea 30)
+   - export textoMetodoPago()  (línea 34)
+   - export textoEntrega()  (línea 38)
+   - export opciones()  (línea 43)
+   - export textoPrecios()  (línea 49)
+   - export imagenPostre()  (línea 53)
 */
 
 import { ESTADOS, CATEGORIAS, METODOS_PAGO, TIPOS_ENTREGA, IMAGEN_POR_DEFECTO } from '../config/app-config.js';

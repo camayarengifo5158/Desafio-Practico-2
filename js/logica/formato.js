@@ -2,14 +2,14 @@
    FORMATEO, SANITIZACIÓN Y UTILIDADES (Lógica de Negocio)
 
    ÍNDICE:
-   - formatoDinero
-   - export dinero()
-   - export redondear()
-   - export fecha()
-   - export fechaHora()
-   - export fechaISOLocal()
-   - export escaparHTML()
-   - export normalizar()
+   - formatoDinero  (línea 15)
+   - export dinero()  (línea 17)
+   - export redondear()  (línea 21)
+   - export fecha()  (línea 25)
+   - export fechaHora()  (línea 31)
+   - export fechaISOLocal()  (línea 38)
+   - export escaparHTML()  (línea 43)
+   - export normalizar()  (línea 52)
 */
 
 const formatoDinero = new Intl.NumberFormat('es-SV', { style: 'currency', currency: 'USD' });

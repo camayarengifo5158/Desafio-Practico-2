@@ -2,8 +2,8 @@
    REPOSITORIO DE USUARIOS (Capa de Datos / Firestore)
 
    ÍNDICE:
-   - export obtenerUsuarios()
-   - export cambiarRol()
+   - export obtenerUsuarios()  (línea 15)
+   - export cambiarRol()  (línea 25)
 */
 
 import { ROLES } from '../config/app-config.js';

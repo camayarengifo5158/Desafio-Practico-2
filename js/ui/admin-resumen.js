@@ -2,10 +2,10 @@
    SUBMÓDULO: TABLERO EJECUTIVO Y RESUMEN (Capa UI / Admin)
 
    ÍNDICE:
-   - contenedor
-   - export iniciar()
-   - export cargar()
-   - pintar()
+   - contenedor  (línea 22)
+   - export iniciar()  (línea 24)
+   - export cargar()  (línea 26)
+   - pintar()  (línea 36)
 */
 
 import { obtenerTransacciones } from '../data/transacciones-repo.js';

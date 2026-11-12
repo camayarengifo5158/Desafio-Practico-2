@@ -2,10 +2,10 @@
    PÁGINA: PANEL DE ADMINISTRACIÓN GENERAL (Capa UI)
 
    ÍNDICE:
-   - usuario
-   - secciones
-   - pestanas
-   - mostrarSeccion()
+   - usuario  (línea 20)
+   - secciones  (línea 22)
+   - pestanas  (línea 23)
+   - mostrarSeccion()  (línea 25)
 */
 
 import { iniciarPagina, confirmar, conCarga, avisarAlLlegar } from './comun.js';

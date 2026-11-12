@@ -2,29 +2,29 @@
    PÁGINA: CATÁLOGO Y TIENDA ONLINE (Capa UI)
 
    ÍNDICE:
-   - resultados
-   - formFiltros
-   - conteo
-   - panelCarrito
-   - botonCarrito
-   - lineasCarrito
-   - subtotalCarrito
-   - botonFinalizar
-   - dialogoCheckout
-   - formCheckout
-   - resumenCheckout
-   - postres
-   - cargarCatalogo()
-   - leerFiltros()
-   - pintarCatalogo()
-   - tarjetaPostre()
-   - temporizadorBusqueda
-   - abrirCarrito()
-   - cerrarCarrito()
-   - pintarCarrito()
-   - prepararFormularioCheckout()
-   - leerCheckout()
-   - pintarResumenCheckout()
+   - resultados  (línea 57)
+   - formFiltros  (línea 58)
+   - conteo  (línea 59)
+   - panelCarrito  (línea 60)
+   - botonCarrito  (línea 61)
+   - lineasCarrito  (línea 62)
+   - subtotalCarrito  (línea 63)
+   - botonFinalizar  (línea 64)
+   - dialogoCheckout  (línea 65)
+   - formCheckout  (línea 66)
+   - resumenCheckout  (línea 67)
+   - postres  (línea 69)
+   - cargarCatalogo()  (línea 71)
+   - leerFiltros()  (línea 82)
+   - pintarCatalogo()  (línea 92)
+   - tarjetaPostre()  (línea 125)
+   - temporizadorBusqueda  (línea 158)
+   - abrirCarrito()  (línea 188)
+   - cerrarCarrito()  (línea 196)
+   - pintarCarrito()  (línea 205)
+   - prepararFormularioCheckout()  (línea 278)
+   - leerCheckout()  (línea 288)
+   - pintarResumenCheckout()  (línea 302)
 */
 
 import { CATEGORIAS, SUCURSALES, METODOS_PAGO, NEGOCIO } from '../config/app-config.js';

@@ -2,14 +2,14 @@
    PROCESAMIENTO Y TRANSFORMACIÓN DE DATOS (Lógica de Negocio)
 
    ÍNDICE:
-   - export precioDesde()
-   - export buscarPostres()
-   - export filtrarPostres()
-   - export ordenarPostres()
-   - export agruparPorCategoria()
-   - export filtrarTransacciones()
-   - export ordenarTransacciones()
-   - export calcularIndicadores()
+   - export precioDesde()  (línea 19)
+   - export buscarPostres()  (línea 23)
+   - export filtrarPostres()  (línea 31)
+   - export ordenarPostres()  (línea 38)
+   - export agruparPorCategoria()  (línea 52)
+   - export filtrarTransacciones()  (línea 61)
+   - export ordenarTransacciones()  (línea 76)
+   - export calcularIndicadores()  (línea 87)
 */
 
 import { CATEGORIAS, ESTADOS } from '../config/app-config.js';

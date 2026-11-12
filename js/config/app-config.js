@@ -2,19 +2,19 @@
    ¿Para qué sirve este archivo en la vida real de la aplicación?
 
    ÍNDICE:
-   - export PREFIJO
-   - export CLAVES
-   - export VERSION_DATOS
-   - export LATENCIA_MS
-   - export ROLES
-   - export CATEGORIAS
-   - export ESTADOS
-   - export METODOS_PAGO
-   - export TIPOS_ENTREGA
-   - export SUCURSALES
-   - export NEGOCIO
-   - export IMAGENES_DISPONIBLES
-   - export IMAGEN_POR_DEFECTO
+   - export PREFIJO  (línea 20)
+   - export CLAVES  (línea 22)
+   - export VERSION_DATOS  (línea 32)
+   - export LATENCIA_MS  (línea 34)
+   - export ROLES  (línea 36)
+   - export CATEGORIAS  (línea 41)
+   - export ESTADOS  (línea 64)
+   - export METODOS_PAGO  (línea 72)
+   - export TIPOS_ENTREGA  (línea 78)
+   - export SUCURSALES  (línea 83)
+   - export NEGOCIO  (línea 85)
+   - export IMAGENES_DISPONIBLES  (línea 92)
+   - export IMAGEN_POR_DEFECTO  (línea 120)
 */
 
 export const PREFIJO = 'fragola.';

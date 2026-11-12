@@ -2,7 +2,7 @@
    MODAL DE EDICIÓN DE PEDIDOS (Capa UI)
 
    ÍNDICE:
-   - export abrirEdicionTransaccion()
+   - export abrirEdicionTransaccion()  (línea 18)
 */
 
 import { ESTADOS, SUCURSALES, TIPOS_ENTREGA, NEGOCIO } from '../config/app-config.js';

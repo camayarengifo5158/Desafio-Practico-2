@@ -2,16 +2,16 @@
    VALIDACIONES DE NEGOCIO (Lógica de Negocio)
 
    ÍNDICE:
-   - REGEX_EMAIL
-   - vacio()
-   - export validarRegistro()
-   - export validarLogin()
-   - export validarPostre()
-   - export validarCantidad()
-   - export fechaMinimaEntrega()
-   - export validarEntrega()
-   - export validarCheckout()
-   - export validarCambioEstado()
+   - REGEX_EMAIL  (línea 21)
+   - vacio()  (línea 23)
+   - export validarRegistro()  (línea 27)
+   - export validarLogin()  (línea 53)
+   - export validarPostre()  (línea 60)
+   - export validarCantidad()  (línea 110)
+   - export fechaMinimaEntrega()  (línea 124)
+   - export validarEntrega()  (línea 128)
+   - export validarCheckout()  (línea 147)
+   - export validarCambioEstado()  (línea 154)
 */
 
 import { CATEGORIAS, NEGOCIO, SUCURSALES, METODOS_PAGO, TIPOS_ENTREGA, ESTADOS } from '../config/app-config.js';

@@ -2,14 +2,14 @@
    SUBMÓDULO: GESTIÓN DE TRANSACCIONES / PEDIDOS (Capa UI / Admin)
 
    ÍNDICE:
-   - tabla
-   - filtros
-   - resumen
-   - transacciones
-   - export cargar()
-   - reemplazar()
-   - pintar()
-   - export iniciar()
+   - tabla  (línea 31)
+   - filtros  (línea 32)
+   - resumen  (línea 33)
+   - transacciones  (línea 35)
+   - export cargar()  (línea 37)
+   - reemplazar()  (línea 47)
+   - pintar()  (línea 52)
+   - export iniciar()  (línea 134)
 */
 
 import { ESTADOS } from '../config/app-config.js';

@@ -2,17 +2,17 @@
    REPOSITORIO DE TRANSACCIONES / PEDIDOS (Capa de Datos)
 
    ÍNDICE:
-   - errorDeValidacion()
-   - claveLinea()
-   - calcularTotales()
-   - generarFolio()
-   - puedeVer()
-   - export obtenerTransacciones()
-   - export obtenerTransaccion()
-   - export crearTransaccion()
-   - export actualizarTransaccion()
-   - export cancelarTransaccion()
-   - export eliminarTransaccion()
+   - errorDeValidacion()  (línea 41)
+   - claveLinea()  (línea 47)
+   - calcularTotales()  (línea 51)
+   - generarFolio()  (línea 57)
+   - puedeVer()  (línea 62)
+   - export obtenerTransacciones()  (línea 66)
+   - export obtenerTransaccion()  (línea 83)
+   - export crearTransaccion()  (línea 130)
+   - export actualizarTransaccion()  (línea 193)
+   - export cancelarTransaccion()  (línea 274)
+   - export eliminarTransaccion()  (línea 297)
 */
 
 import { ROLES, NEGOCIO, ESTADOS } from '../config/app-config.js';

@@ -2,15 +2,15 @@
    ¿Para qué sirve este archivo en la vida real de la aplicación?
 
    ÍNDICE:
-   - usuarioActivo
-   - export usuarioPublico()
-   - export usuarioActual()
-   - export esAdmin()
-   - export requerirSesion()
-   - export requerirRol()
-   - export registrar()
-   - export iniciarSesion()
-   - export cerrarSesion()
+   - usuarioActivo  (línea 37)
+   - export usuarioPublico()  (línea 57)
+   - export usuarioActual()  (línea 63)
+   - export esAdmin()  (línea 67)
+   - export requerirSesion()  (línea 71)
+   - export requerirRol()  (línea 79)
+   - export registrar()  (línea 87)
+   - export iniciarSesion()  (línea 128)
+   - export cerrarSesion()  (línea 149)
 */
 
 import { ROLES, CLAVES } from '../config/app-config.js';

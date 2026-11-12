@@ -2,10 +2,10 @@
    SUBMÓDULO: GESTIÓN DE USUARIOS Y ROLES (Capa UI / Admin)
 
    ÍNDICE:
-   - tabla
-   - export iniciar()
-   - export cargar()
-   - pintar()
+   - tabla  (línea 25)
+   - export iniciar()  (línea 27)
+   - export cargar()  (línea 55)
+   - pintar()  (línea 65)
 */
 
 import { ROLES } from '../config/app-config.js';

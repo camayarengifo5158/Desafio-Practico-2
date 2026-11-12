@@ -2,17 +2,17 @@
    DATOS INICIALES Y SEMILLA (Capa de Datos / Inicialización)
 
    ÍNDICE:
-   - FECHA_BASE
-   - postre()
-   - export POSTRES_INICIALES
-   - export USUARIOS_INICIALES
-   - linea()
-   - transaccion()
-   - crearTransaccionesIniciales()
-   - export asegurarDatosIniciales()
-   - export restablecerDatos()
-   - export cargarSemillaFirebase()
-   - export restablecerDatosFirestore()
+   - FECHA_BASE  (línea 24)
+   - postre()  (línea 26)
+   - export POSTRES_INICIALES  (línea 41)
+   - export USUARIOS_INICIALES  (línea 113)
+   - linea()  (línea 143)
+   - transaccion()  (línea 157)
+   - crearTransaccionesIniciales()  (línea 181)
+   - export asegurarDatosIniciales()  (línea 221)
+   - export restablecerDatos()  (línea 225)
+   - export cargarSemillaFirebase()  (línea 229)
+   - export restablecerDatosFirestore()  (línea 239)
 */
 
 import { CLAVES, VERSION_DATOS, NEGOCIO, ROLES } from '../config/app-config.js';
