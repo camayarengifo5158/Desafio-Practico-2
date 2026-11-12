@@ -1,41 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: catalogo.html
+   PÁGINA: CATÁLOGO Y TIENDA ONLINE (Estructura HTML)
 
-<!-- ==========================================================
-     PÁGINA: CATÁLOGO Y TIENDA ONLINE (Estructura HTML)
-     Archivo: catalogo.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Es la tienda online principal de Fragola Postres:
-     1. Menú con filtros en tiempo real: búsqueda por palabra clave,
-        filtro por categorías, ordenamiento por precio/nombre/fecha y
-        casilla para ver únicamente postres disponibles.
-     2. Cuadrícula de postres generada por JavaScript desde Cloud Firestore.
-     3. Carrito lateral desplegable (Drawer) accesible desde el botón flotante.
-     4. Modal nativo (<dialog>) de finalización de compra (Checkout) con
-        selección de entrega, fecha obligatoria de 48h de anticipación y pasarela de pago.
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+   - <form> #filtros-catalogo
+   - <aside> #carrito
+   - <dialog> #dialogo-checkout
+   - <form> #form-checkout
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo · Fragola Postres</title>
     <meta name="description" content="Catálogo de Fragola: arma tu pedido de postres artesanales en línea.">
-    <!-- Estilos compartidos del sitio y estilos de la aplicación interactiva -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
-    <!-- Tipografías web oficiales -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
 </head>
 
 <body class="pagina-catalogo">
 
-    <!-- Enlace de salto accesible para lectores de pantalla y navegación por teclado -->
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <!-- ==========================================================
-         ENCABEZADO Y NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav class="nav-container contenedor" aria-label="Navegación principal">
             <a class="logo" href="index.html" aria-label="Fragola, inicio">
@@ -43,43 +33,33 @@
             </a>
             <ul class="nav-menu">
                 <li><a href="index.html">Inicio</a></li>
-                <!-- Página activa marcada con aria-current para accesibilidad -->
                 <li><a class="activo" aria-current="page" href="catalogo.html">Catálogo</a></li>
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Contenedor donde JavaScript inyecta la sesión actual y el acceso al carrito -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL: CATÁLOGO Y FILTROS
-         ========================================================== -->
     <main id="contenido" class="catalogo">
 
-        <!-- Portada del catálogo y barra de herramientas de filtrado -->
         <section class="catalogo__hero">
             <div class="contenedor catalogo__hero-interior">
                 <p class="sobretitulo catalogo__sobretitulo">NUESTRO MENÚ</p>
                 <h1 class="catalogo__titulo">Catálogo de <span class="titulo-cursiva">postres.</span></h1>
                 <p class="catalogo__intro">Cheesecakes artesanales, postres fríos y pastelería fina. Arma tu pedido y recíbelo con 48 horas de anticipación.</p>
 
-                <!-- Barra de búsqueda y filtros reactivos -->
                 <form class="barra-filtros" id="filtros-catalogo" role="search" aria-label="Buscar y filtrar postres">
-                    <!-- Búsqueda con retardo (debounce) para no saturar el render -->
                     <div class="campo-formulario barra-filtros__busqueda">
                         <label for="buscar">Buscar</label>
                         <input type="search" id="buscar" name="buscar" placeholder="Ej. cheesecake, keto, galleta…" autocomplete="off">
                     </div>
-                    <!-- Selector de categorías (se llena dinámicamente con las 4 categorías oficiales) -->
                     <div class="campo-formulario">
                         <label for="filtro-categoria">Categoría</label>
                         <select id="filtro-categoria" name="categoria">
                             <option value="todas">Todas</option>
                         </select>
                     </div>
-                    <!-- Selector de ordenamiento -->
                     <div class="campo-formulario">
                         <label for="orden">Ordenar por</label>
                         <select id="orden" name="orden">
@@ -89,21 +69,17 @@
                             <option value="recientes">Recién actualizados</option>
                         </select>
                     </div>
-                    <!-- Interruptor para ocultar postres agotados -->
                     <label class="casilla">
                         <input type="checkbox" name="soloDisponibles" id="solo-disponibles">
                         Solo disponibles
                     </label>
                 </form>
-                <!-- Conteo dinámico anunciado de forma accesible (ej. "22 de 22 postres") -->
                 <p class="barra-filtros__conteo" id="conteo-resultados" aria-live="polite"></p>
             </div>
         </section>
 
-        <!-- Zona dinámica: Aquí pagina-catalogo.js inyecta las secciones por categoría y las tarjetas de postres -->
         <div id="catalogo-resultados"></div>
 
-        <!-- Llamado a la acción para pedidos especiales fuera de menú -->
         <section class="catalogo__cta" aria-labelledby="titulo-cta">
             <div class="contenedor">
                 <h2 class="catalogo__cta-titulo" id="titulo-cta">¿Buscas algo personalizado?</h2>
@@ -113,24 +89,17 @@
         </section>
     </main>
 
-    <!-- ==========================================================
-         CARRITO DE COMPRAS LATERAL (Drawer Deslizable)
-         ========================================================== -->
-    <!-- Botón flotante accesible en la esquina inferior derecha con contador en vivo -->
     <button type="button" class="carrito-flotante" id="boton-carrito" aria-controls="carrito" aria-expanded="false">
         Carrito · <span data-contador-flotante>0</span>
     </button>
 
-    <!-- Panel lateral: oculto por defecto con el atributo hidden -->
     <aside class="carrito" id="carrito" aria-labelledby="titulo-carrito" hidden>
-        <!-- Fondo oscuro semitransparente que cierra el carrito al hacer clic -->
         <div class="carrito__fondo" data-cerrar-carrito></div>
         <div class="carrito__panel">
             <header class="carrito__encabezado">
                 <h2 id="titulo-carrito">Tu carrito</h2>
                 <button type="button" class="boton-icono" data-cerrar-carrito aria-label="Cerrar carrito">✕</button>
             </header>
-            <!-- Contenedor donde se listan los postres agregados con botones para subir/bajar cantidades -->
             <div class="carrito__lineas" id="carrito-lineas"></div>
             <footer class="carrito__pie">
                 <p class="carrito__subtotal">Subtotal <strong id="carrito-subtotal">$0.00</strong></p>
@@ -141,9 +110,6 @@
         </div>
     </aside>
 
-    <!-- ==========================================================
-         MODAL DE FINALIZACIÓN DE COMPRA / CHECKOUT (<dialog>)
-         ========================================================== -->
     <dialog class="dialogo" id="dialogo-checkout" aria-labelledby="titulo-checkout">
         <form class="dialogo__cuerpo" id="form-checkout" novalidate>
             <header class="dialogo__encabezado">
@@ -151,7 +117,6 @@
                 <button type="button" class="boton-icono" data-cerrar-dialogo aria-label="Cerrar">✕</button>
             </header>
 
-            <!-- Sección de Logística de Entrega -->
             <fieldset class="grupo-campos">
                 <legend>Entrega</legend>
                 <div class="opciones-radio">
@@ -165,7 +130,6 @@
                     </div>
                     <div class="campo-formulario">
                         <label for="checkout-fecha">Fecha de entrega *</label>
-                        <!-- El atributo min se fija automáticamente a 48h desde hoy mediante JavaScript -->
                         <input type="date" id="checkout-fecha" name="fecha" required>
                     </div>
                 </div>
@@ -175,20 +139,17 @@
                 </div>
             </fieldset>
 
-            <!-- Sección de Método de Pago -->
             <fieldset class="grupo-campos">
                 <legend>Pago</legend>
                 <div class="opciones-radio" id="opciones-pago"></div>
                 <p class="aviso-simulacion">Pago simulado con fines académicos: no se solicitan ni guardan datos de tarjetas.</p>
             </fieldset>
 
-            <!-- Notas de personalización para los pasteleros -->
             <div class="campo-formulario">
                 <label for="checkout-notas">Notas para la cocina (opcional)</label>
                 <textarea id="checkout-notas" name="notas" rows="2" maxlength="250" placeholder="Ej. dedicatoria, alergias, sabor preferido…"></textarea>
             </div>
 
-            <!-- Resumen numérico reactivo antes de confirmar la compra -->
             <div class="resumen-compra" id="resumen-checkout" aria-live="polite"></div>
 
             <div class="dialogo__acciones">
@@ -198,9 +159,6 @@
         </form>
     </dialog>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -234,7 +192,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular del catálogo -->
     <script type="module" src="js/ui/pagina-catalogo.js"></script>
 </body>
 

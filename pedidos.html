@@ -1,40 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: pedidos.html
+   PÁGINA: MIS PEDIDOS (Historial de Compras del Cliente)
 
-<!-- ==========================================================
-     PÁGINA: MIS PEDIDOS (Historial de Compras del Cliente)
-     Archivo: pedidos.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Es el área privada del cliente donde puede:
-     1. Consultar todos los pedidos que ha realizado en Fragola.
-     2. Filtrar por estado (Pendientes, En preparación, Listos, Entregados, Cancelados).
-     3. Ordenar por fecha o monto de compra.
-     4. Ver el estado en vivo de cada postre encargado.
-     5. Abrir el comprobante oficial para impresión o guardado en PDF.
-     6. Modificar detalles o cancelar pedidos mientras sigan en estado "Pendiente".
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis pedidos · Fragola Postres</title>
     <meta name="description" content="Historial de compras en Fragola Postres.">
-    <!-- Estilos base e interactivos -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
-    <!-- Tipografías de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
 </head>
 
 <body class="pagina-pedidos">
 
-    <!-- Enlace de accesibilidad para saltar directo al contenido -->
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <!-- ==========================================================
-         ENCABEZADO Y NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav class="nav-container contenedor" aria-label="Navegación principal">
             <a class="logo" href="index.html" aria-label="Fragola, inicio">
@@ -46,14 +33,10 @@
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Inyección dinámica de la sesión del usuario -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL: LISTA DE PEDIDOS Y FILTROS
-         ========================================================== -->
     <main id="contenido" class="pagina-pedidos">
         <section class="catalogo__hero cabecera-seccion">
             <div class="contenedor">
@@ -64,7 +47,6 @@
         </section>
 
         <section class="contenedor seccion-app">
-            <!-- Barra de herramientas: Filtros por estado y ordenamiento de compras -->
             <div class="barra-herramientas">
                 <div class="campo-formulario">
                     <label for="filtro-estado">Estado</label>
@@ -79,18 +61,13 @@
                         <option value="entrega">Fecha de entrega</option>
                     </select>
                 </div>
-                <!-- Resumen accesible en vivo: anuncia cantidad de pedidos y total acumulado gastado -->
                 <p class="barra-herramientas__resumen" id="resumen-pedidos" aria-live="polite"></p>
             </div>
-            
-            <!-- Contenedor dinámico donde pagina-pedidos.js inyecta las tarjetas de pedidos -->
+
             <div id="lista-pedidos" class="lista-pedidos"></div>
         </section>
     </main>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -124,7 +101,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular de la página de pedidos -->
     <script type="module" src="js/ui/pagina-pedidos.js"></script>
 </body>
 

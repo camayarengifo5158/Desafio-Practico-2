@@ -1,63 +1,28 @@
-/* ==========================================================
+/* ARCHIVO: js/ui/admin-resumen.js
    SUBMÓDULO: TABLERO EJECUTIVO Y RESUMEN (Capa UI / Admin)
-   Archivo: js/ui/admin-resumen.js
-   ----------------------------------------------------------
-   ¿Para qué sirve este archivo?
-   Es el "cuadro de mando gerencial" del negocio. Transforma las
-   órdenes y postres crudos de Firestore en métricas financieras
-   y gráficas visuales comprensibles para el dueño de la pastelería.
 
-   Métricas clave calculadas y mostradas:
-   1. Tarjetas de KPI (Key Performance Indicators):
-      - Ventas totales netas (excluyendo cancelaciones).
-      - Ticket promedio por compra.
-      - Pedidos activos que requieren trabajo en cocina.
-      - Dinero pendiente por cobrar.
-      - Contador de postres disponibles vs total del catálogo.
-   2. Gráfico de barras horizontales (CSS dinámico):
-      - Ventas en dólares por cada categoría de repostería.
-   3. Tabla de Top 5 postres más vendidos (por unidades despachadas).
-   4. Desglose cuantitativo de pedidos por estado del flujo.
-   5. Lista de las próximas 5 entregas programadas ordenadas por fecha.
-   ========================================================== */
+   ÍNDICE:
+   - contenedor
+   - export iniciar()
+   - export cargar()
+   - pintar()
+*/
 
-// Importamos las operaciones para consultar pedidos y catálogo desde Firestore
 import { obtenerTransacciones } from '../data/transacciones-repo.js';
 import { obtenerPostres } from '../data/postres-repo.js';
 
-// Traemos las funciones de cálculo matemático de indicadores y ordenamiento
 import { calcularIndicadores, ordenarTransacciones } from '../logica/procesamiento.js';
 
-// Traemos formateadores de moneda, fecha y sanitizador XSS
 import { dinero, fecha, escaparHTML } from '../logica/formato.js';
 
-// Traemos utilidades de estado de carga y error
 import { mostrarCargando, mostrarError } from './comun.js';
 
-// Traemos la plantilla de insignias de colores
 import { insigniaEstado } from './plantillas.js';
 
-// Contenedor principal de la pestaña de resumen
 const contenedor = document.querySelector('#contenido-resumen');
 
-/* ----------------------------------------------------------
-   iniciar()
-   Cumple con el contrato de interfaz de los submódulos de administración.
-   ---------------------------------------------------------- */
 export function iniciar() {}
 
-/* ----------------------------------------------------------
-   cargar()
-   ¿Para qué sirve? (OPTIMIZACIÓN DE CONSULTAS EN PARALELO)
-   Para calcular los indicadores necesitamos tanto las transacciones
-   como los postres.
-   
-   En vez de hacer:
-   `await obtenerTransacciones()` (esperar 300ms) y luego `await obtenerPostres()` (esperar otros 300ms),
-   usamos `Promise.all([obtenerTransacciones(), obtenerPostres()])`.
-   Ambas peticiones viajan juntas a los servidores de Google y tardan
-   la mitad del tiempo.
-   ---------------------------------------------------------- */
 export async function cargar() {
     mostrarCargando(contenedor, 'Calculando indicadores…');
     try {
@@ -68,26 +33,17 @@ export async function cargar() {
     }
 }
 
-/* ----------------------------------------------------------
-   pintar(transacciones, postres)
-   ¿Para qué sirve?
-   Toma los datos crudos, invoca `calcularIndicadores()` y genera
-   la cuadrícula visual de reportes.
-   ---------------------------------------------------------- */
 function pintar(transacciones, postres) {
-    // Calculamos todas las métricas de inteligencia de negocio
     const ind = calcularIndicadores(transacciones);
-    
-    // Obtenemos el valor más alto entre categorías para calcular el porcentaje de las barras CSS
+
     const maxCategoria = Math.max(...ind.porCategoria.map((c) => c.total), 1);
-    
-    // Filtramos las órdenes activas y las ordenamos por fecha de entrega más próxima (primeras 5)
+
     const proximas = ordenarTransacciones(
         transacciones.filter((t) => ['pendiente', 'en_preparacion', 'lista'].includes(t.estado)), 'entrega'
     ).slice(0, 5);
 
     contenedor.removeAttribute('aria-busy');
-    
+
     contenedor.innerHTML = `
         <!-- 1. Tarjetas de Indicadores Principales (KPIs) -->
         <div class="indicadores">

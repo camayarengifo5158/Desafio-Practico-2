@@ -1,34 +1,26 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: contacto.html
+   PÁGINA: CONTACTO Y COTIZACIONES (Estructura HTML)
 
-<!-- ==========================================================
-     PÁGINA: CONTACTO Y COTIZACIONES (Estructura HTML)
-     Archivo: contacto.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Es el canal de comunicación directa para clientes que buscan:
-     1. Cotizar mesas de postres para bodas, cumpleaños o eventos corporativos.
-     2. Solicitar pasteles personalizados fuera del catálogo estándar.
-     3. Consultar ubicaciones y horarios de las sucursales físicas (La Mascota y Epic Plaza).
-     4. Conectar con el servicio dinámico de cabecera a través de `pagina-general.js`.
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+   - <section> #formulario-contacto
+   - <section> #sucursales
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Contacto | Fragola Bakery</title>
-    <!-- Estilos compartidos y de aplicación -->
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <meta content="Cuéntanos tu idea, consulta por un postre o encuentra las sucursales de Fragola Bakery." name="description" />
-    <!-- Tipografías oficiales de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet" />
 </head>
 
 <body>
-    <!-- ==========================================================
-         ENCABEZADO Y NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav aria-label="Navegación principal" class="nav-container contenedor">
             <a aria-label="Fragola, inicio" class="logo" href="index.html">
@@ -40,16 +32,11 @@
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a aria-current="page" class="activo" href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Inyección dinámica de sesión y carrito -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL
-         ========================================================== -->
     <main id="contenido">
-        <!-- 1. PORTADA HERO DE CONTACTO -->
         <section class="portada-contacto">
             <div class="contenedor">
                 <p class="sobretitulo">HABLEMOS DE ALGO DULCE</p>
@@ -63,7 +50,6 @@
             </div>
         </section>
 
-        <!-- 2. FORMULARIO DE COTIZACIÓN Y DETALLES DE ATENCIÓN -->
         <section class="seccion-contacto" id="formulario-contacto">
             <div class="contenedor dos-columnas">
                 <div class="informacion-contacto">
@@ -139,7 +125,6 @@
             </div>
         </section>
 
-        <!-- 3. SUCURSALES FÍSICAS -->
         <section class="sucursales" id="sucursales">
             <div class="contenedor">
                 <div class="destacados-encabezado">
@@ -176,9 +161,6 @@
         </section>
     </main>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -211,7 +193,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular de la página informativa -->
     <script type="module" src="js/ui/pagina-general.js"></script>
 </body>
 

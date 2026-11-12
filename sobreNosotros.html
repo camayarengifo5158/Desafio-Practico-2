@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: sobreNosotros.html
+   PÁGINA: SOBRE NOSOTROS (Estructura HTML)
 
-<!-- ==========================================================
-     PÁGINA: SOBRE NOSOTROS (Estructura HTML)
-     Archivo: sobreNosotros.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Presenta la historia, misión, visión y valores de Fragola Postres:
-     1. Origen del emprendimiento familiar salvadoreño liderado por Natalia Rengifo.
-     2. Misión y visión empresarial de repostería artesanal.
-     3. Pilares y valores: Calidad, Pasión, Cercanía e Innovación.
-     4. Integración con `pagina-general.js` para la sesión y el carrito en la cabecera.
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre Nosotros · Fragola Postres</title>
     <meta name="description" content="Conoce más sobre Fragola Postres, nuestra historia, valores y pasión por la repostería.">
-    <!-- Estilos compartidos y tipografías -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400&family=Raleway:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <!-- ==========================================================
-         ENCABEZADO Y NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav class="nav-container contenedor" aria-label="Navegación principal">
             <a class="logo" href="index.html" aria-label="Fragola, inicio">
@@ -39,16 +30,11 @@
                 <li><a class="activo" href="sobreNosotros.html" aria-current="page">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Inyección dinámica de sesión y carrito -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL
-         ========================================================== -->
     <main id="contenido">
-        <!-- 1. PORTADA INFORMATIVA -->
         <section class="portada">
             <div class="contenedor portada-interior">
                 <p class="sobretitulo">CONOCE NUESTRA HISTORIA</p>
@@ -70,7 +56,6 @@
             </div>
         </section>
 
-        <!-- 2. SECCIÓN: NUESTRA HISTORIA FAMILIAR -->
         <section class="eventos">
             <div class="contenedor dos-columnas">
                 <div class="columna-imagen">
@@ -97,7 +82,6 @@
             </div>
         </section>
 
-        <!-- 3. SECCIÓN: MISIÓN Y VISIÓN -->
         <section class="destacados">
             <div class="contenedor">
                 <div class="destacados-encabezado">
@@ -131,9 +115,6 @@
         </section>
     </main>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -166,7 +147,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular de la página informativa -->
     <script type="module" src="js/ui/pagina-general.js"></script>
 </body>
 

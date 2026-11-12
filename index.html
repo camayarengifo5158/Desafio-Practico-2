@@ -1,36 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: index.html
+   PÁGINA PRINCIPAL / PORTADA (Estructura HTML)
 
-<!-- ==========================================================
-     PÁGINA PRINCIPAL / PORTADA (Estructura HTML)
-     Archivo: index.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Es la vitrina y carta de presentación de "Fragola Postres":
-     1. Encabezado institucional con navegación y zona reactiva de sesión.
-     2. Sección Hero (Portada): propuesta de valor y llamados a la acción (CTAs).
-     3. Favoritos del horno: muestra visual de los postres más representativos.
-     4. Servicio de eventos: mesas dulces para bodas, cumpleaños y corporativos.
-     5. Sucursales físicas: horarios y ubicación en Google Maps (La Mascota y Epic Plaza).
-     6. Pie de página y enlace al controlador modular `pagina-general.js`.
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+   - <section> #favoritos
+   - <section> #eventos
+   - <section> #sucursales
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Fragola · Postres y momentos especiales</title>
-    <!-- Hojas de estilos del proyecto -->
     <link href="css/style.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
     <meta content="Postres artesanales y mesas dulces para tus momentos especiales. Conoce los favoritos de Fragola y nuestras sucursales." name="description" />
-    <!-- Tipografías web de Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet" />
 </head>
 
 <body>
-    <!-- ==========================================================
-         ENCABEZADO Y BARRA DE NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav aria-label="Navegación principal" class="nav-container contenedor">
             <a aria-label="Fragola, inicio" class="logo" href="index.html">
@@ -42,16 +33,11 @@
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Inyección dinámica de sesión: JavaScript insertará aquí el carrito y el menú de usuario -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL
-         ========================================================== -->
     <main id="contenido">
-        <!-- 1. PORTADA / HERO SECTION -->
         <section class="portada">
             <div class="contenedor portada-interior">
                 <p class="sobretitulo">UN POQUITO DE DULZURA, TODOS LOS DÍAS</p>
@@ -76,14 +62,12 @@
                         </a>
                     </div>
                 </div>
-                <!-- Flecha de anclaje para bajar a la sección de postres favoritos -->
                 <a class="seguir" href="#favoritos">
                     HECHO PARA COMPARTIR <span>↓</span>
                 </a>
             </div>
         </section>
 
-        <!-- 2. SECCIÓN: NUESTROS FAVORITOS -->
         <section class="destacados" id="favoritos">
             <div class="contenedor">
                 <div class="destacados-encabezado">
@@ -91,7 +75,6 @@
                     <h2>Nuestros favoritos</h2>
                     <p class="descripcion-seccion">Los postres más pedidos y amados por nuestros clientes</p>
                 </div>
-                <!-- Cuadrícula de tarjetas destacadas -->
                 <div class="fila-destacados">
                     <article class="tarjeta">
                         <div class="tarjeta-imagen">
@@ -146,7 +129,6 @@
             </div>
         </section>
 
-        <!-- 3. SECCIÓN: EVENTOS Y MESAS DULCES -->
         <section class="eventos" id="eventos">
             <div class="contenedor dos-columnas">
                 <div class="columna-imagen">
@@ -167,7 +149,6 @@
             </div>
         </section>
 
-        <!-- 4. SECCIÓN: SUCURSALES FÍSICAS -->
         <section class="sucursales" id="sucursales">
             <div class="contenedor">
                 <div class="destacados-encabezado">
@@ -204,9 +185,6 @@
         </section>
     </main>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -239,7 +217,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular de la página de inicio -->
     <script type="module" src="js/ui/pagina-general.js"></script>
 </body>
 

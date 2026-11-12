@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html lang="es">
+<!--
+   ARCHIVO: ingresar.html
+   PÁGINA: AUTENTICACIÓN (Ingreso y Creación de Cuenta)
 
-<!-- ==========================================================
-     PÁGINA: AUTENTICACIÓN (Ingreso y Creación de Cuenta)
-     Archivo: ingresar.html
-     ----------------------------------------------------------
-     ¿Para qué sirve esta página?
-     Es el portal de acceso seguro para usuarios y administradores:
-     1. Pestañas WAI-ARIA para alternar entre "Iniciar sesión" y "Crear cuenta".
-     2. Formulario de Login: autentica contra Firebase Auth y recupera el perfil de Firestore.
-     3. Formulario de Registro: crea el usuario en Firebase Auth y su documento
-        con rol "cliente" en Firestore.
-     4. Integración con `pagina-ingresar.js` para redirección inteligente
-        (ej: si venía de comprar, lo devuelve al carrito).
-     ========================================================== -->
+   ÍNDICE:
+   - <main> #contenido
+   - <section> #panel-login
+   - <form> #form-login
+   - <section> #panel-registro
+   - <form> #form-registro
+-->
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingresar · Fragola Postres</title>
     <meta name="description" content="Inicia sesión o crea tu cuenta en Fragola Postres.">
-    <!-- Hojas de estilos del proyecto -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
-    <!-- Tipografías web -->
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=IBM+Plex+Mono:wght@400&amp;family=Raleway:wght@500&amp;display=swap" rel="stylesheet">
 </head>
 
 <body class="pagina-ingresar">
 
-    <!-- Enlace accesible de salto al contenido -->
     <a class="saltar-contenido" href="#contenido">Saltar al contenido</a>
 
-    <!-- ==========================================================
-         ENCABEZADO Y NAVEGACIÓN
-         ========================================================== -->
     <header class="cabecera">
         <nav class="nav-container contenedor" aria-label="Navegación principal">
             <a class="logo" href="index.html" aria-label="Fragola, inicio">
@@ -46,14 +37,10 @@
                 <li><a href="sobreNosotros.html">Sobre nosotros</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
             </ul>
-            <!-- Inyección dinámica de sesión -->
             <div class="nav-sesion" data-nav-sesion></div>
         </nav>
     </header>
 
-    <!-- ==========================================================
-         CONTENIDO PRINCIPAL: FORMULARIOS DE ACCESO
-         ========================================================== -->
     <main id="contenido" class="pagina-acceso">
         <section class="acceso contenedor">
             <div class="acceso__intro">
@@ -63,20 +50,14 @@
             </div>
 
             <div class="acceso__tarjeta">
-                <!-- Pestañas WAI-ARIA accesibles por teclado (flechas izquierda/derecha) -->
                 <div class="pestanas" role="tablist" aria-label="Acceso">
                     <button type="button" role="tab" id="tab-login" aria-controls="panel-login" aria-selected="true">Iniciar sesión</button>
                     <button type="button" role="tab" id="tab-registro" aria-controls="panel-registro" aria-selected="false" tabindex="-1">Crear cuenta</button>
                 </div>
 
-                <!-- Aviso contextual si el usuario fue redirigido desde el checkout -->
                 <div class="acceso__aviso" id="aviso-acceso" role="alert" hidden></div>
 
-                <!-- ==================================================
-                     1. FORMULARIO DE INICIO DE SESIÓN (LOGIN)
-                     ================================================== -->
                 <section id="panel-login" role="tabpanel" aria-labelledby="tab-login">
-                    <!-- novalidate desactiva los globitos nativos para usar nuestras validaciones accesibles con aria-invalid -->
                     <form id="form-login" novalidate>
                         <div class="campo-formulario">
                             <label for="login-email">Correo electrónico *</label>
@@ -90,9 +71,6 @@
                     </form>
                 </section>
 
-                <!-- ==================================================
-                     2. FORMULARIO DE REGISTRO (CREAR CUENTA)
-                     ================================================== -->
                 <section id="panel-registro" role="tabpanel" aria-labelledby="tab-registro" hidden>
                     <form id="form-registro" novalidate>
                         <div class="campo-formulario">
@@ -119,9 +97,6 @@
         </section>
     </main>
 
-    <!-- ==========================================================
-         PIE DE PÁGINA (Footer Institucional)
-         ========================================================== -->
     <footer class="pie">
         <div class="contenedor fila-pie">
             <div class="columna-pie">
@@ -155,7 +130,6 @@
         </div>
     </footer>
 
-    <!-- Controlador JavaScript modular de la página de ingreso -->
     <script type="module" src="js/ui/pagina-ingresar.js"></script>
 </body>
 
