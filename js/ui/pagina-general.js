@@ -2,7 +2,7 @@
    PÁGINAS GENERALES E INFORMATIVAS (Capa UI)
 
    ÍNDICE:
-   - iniciarPagina() se ejecuta directamente  (línea 9)
+   - iniciarPagina() se ejecuta directamente  (línea 10)
 */
 
 import { iniciarPagina } from './comun.js';
